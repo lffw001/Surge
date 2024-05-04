@@ -29,6 +29,16 @@ async function main() {
         } else {
             console.log(sign.Message)
         }
+        //幸运抽奖
+        console.log("————————————")
+        console.log("幸运抽奖")
+        let getCount = await commonGet('/v3/today.draw.count',getSign('GET','/api/v3/today.draw.count',{}));
+        if (getCount.Data.count > 0) {
+            let draw = await commonPost('/v3/luck.draw',{"from":""},getSign('POST','/api/v3/luck.draw',{}));
+            console.log(`抽奖获得：${draw.Data.prize_name}`)
+        } else {
+            console.log("今日免费抽奖次数已用完")
+        }
         console.log("————————————")
         console.log("开始做任务")
         //获取帖子参数
