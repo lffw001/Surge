@@ -1,6 +1,6 @@
 const $ = new Env('IQOO社区')
 const crypto = createCryptoJS()
-const IQOO = ($.isNode() ? process.env.IQOO : $.getjson("IQOO")) || [];
+const IQOO = ($.isNode() ? JSON.parse(process.env.IQOO) : $.getjson("IQOO")) || [];
 const IQOO_Create = ($.isNode() ? process.env.IQOO_Create : $.getdata("IQOO_Create")) || false;
 let time = ''
 let token = ''
@@ -23,7 +23,11 @@ async function main() {
         //签到
         console.log("开始签到")
         let sign = await commonPost('/v3/sign',{"from":""},getSign('POST','/api/v3/sign',{"from":""}));
-        if (sign.Code == 200) {
+        if (sign.Code == -4011) {
+            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
+            continue
+        }
+        if (sign.Code == 0) {
             for (const item of sign.Meta.tips) {
                 console.log(item.message)
             }
