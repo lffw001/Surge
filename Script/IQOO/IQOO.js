@@ -55,13 +55,25 @@ async function main() {
                 if (count == 0) {
                     console.log('任务已完成')
                 } else {
-                    if (task.access == '首次发表评论') {
-                        time = Math.floor(Date.now() / 1e3)
-                        let create = await commonPost('/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""},getSign('POST','/api/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""}));
-                        if (create.Meta) {
-                            for (const item of create.Meta.tips) {
-                                console.log(item.message)
-                            }
+                    time = Math.floor(Date.now() / 1e3)
+                    let create = await commonPost('/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""},getSign('POST','/api/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""}));
+                    if (create.Meta) {
+                        for (const item of create.Meta.tips) {
+                            console.log(item.message)
+                        }
+                    }
+                }
+            }
+            if (task.access == '认证机型') {
+                let count = parseInt(task.upper_limit) - task.isFinal;
+                if (count == 0) {
+                    console.log('任务已完成')
+                } else {
+                    time = Math.floor(Date.now() / 1e3)
+                    let setPhone = await commonPost('/v3/set/phone.model',{"model":"V2218A","brand":"vivo","product":"iQOO 10 Pro","guideType":1},getSign('POST','/api/v3/set/phone.model',{"model":"V2218A","brand":"vivo","product":"iQOO 10 Pro","guideType":1}));
+                    if (setPhone.Meta) {
+                        for (const item of setPhone.Meta.tips) {
+                            console.log(item.message)
                         }
                     }
                 }
