@@ -137,7 +137,7 @@ async function getCookie() {
     if (!token) {
         return
     }
-    const xVisitor = $request.headers["x-visitor"]
+    const xVisitor = $request.headers["x-visitor"] || $request.headers["X-Visitor"];
     const body = $.toObj($response.body);
     if (!body.Data || !body.Data.id) {
         return
