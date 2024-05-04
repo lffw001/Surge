@@ -11,10 +11,11 @@
 |     同程旅行     |     [TongCheng](https://github.com/xzxxn777/Surge/blob/main/Script/TongCheng)     | ✅(2024/04/24) |      ✅      |
 |    统一     |        [TongYi](https://github.com/xzxxn777/Surge/blob/main/Script/TongYi)        | ✅(2022/11/28) |      ✅      |
 |    茄皇     | [QieHuang](https://github.com/xzxxn777/Surge/blob/main/Script/TongYi/QieHuang.js) | ✅(2024/04/24) |      ✅️      |
-|      网易严选      |        [WYYX](https://github.com/xzxxn777/Surge/blob/main/Script/WYYX)        | ✅(2024/04/24) |      ✅️      |
-|      涌鑫充电      |        [YongXin](https://github.com/xzxxn777/Surge/blob/main/Script/YongXin)        | ✅(2024/04/24) |      ✅️      |
-|      辛喜      |        [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XinXi)        | ✅(2024/04/24) |      ✅️      |
-|      习酒      |        [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XiJiu)        | ✅(2024/04/26) |      ✅️      |
+|      网易严选      |          [WYYX](https://github.com/xzxxn777/Surge/blob/main/Script/WYYX)          | ✅(2024/04/24) |      ✅️      |
+|      涌鑫充电      |       [YongXin](https://github.com/xzxxn777/Surge/blob/main/Script/YongXin)       | ✅(2024/04/24) |      ✅️      |
+|      辛喜      |         [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XinXi)         | ✅(2024/04/24) |      ✅️      |
+|      习酒      |         [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XiJiu)         | ✅(2024/04/26) |      ✅️      |
+|      IQOO社区      |         [IQOO](https://github.com/xzxxn777/Surge/blob/main/Script/IQOO)          | ✅(2024/05/04) |      ✅️      |
 
 ------
 ### [一键订阅boxjs](http://boxjs.com/#/sub/add/https://raw.githubusercontent.com/xzxxn777/quanx/main/xzxxn.json)
