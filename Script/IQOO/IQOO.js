@@ -1,6 +1,7 @@
 const $ = new Env('IQOO社区')
 const crypto = createCryptoJS()
 const IQOO = ($.isNode() ? process.env.IQOO : $.getjson("IQOO")) || [];
+const IQOO_Create = ($.isNode() ? process.env.IQOO_Create : $.getdata("IQOO_Create")) || false;
 let time = ''
 let token = ''
 let xVisitor = ''
@@ -69,6 +70,32 @@ async function main() {
         //今日任务
         for (const task of tasksList.Data.perDayData) {
             console.log(`任务：${task.access}`)
+            if(task.access == '发表帖子') {
+                let count = parseInt(task.upper_limit) - task.isFinal;
+                if (count == 0) {
+                    console.log('任务已完成')
+                } else {
+                    console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
+                    if (IQOO_Create) {
+                        for (let i = 0; i < count; i++) {
+                            let text = await textGet();
+                            if (!text) {
+                                text = '如果觉得没有朋友，就去找喜欢的人表白，对方会提出和你做朋友的。'
+                            }
+                            text = `<p>${text}</p>`
+                            let body = {"title":"毒鸡汤","categoryId":27,"content":{"text":text},"position":{},"price":0,"freeWords":0,"attachmentPrice":0,"draft":0,"anonymous":0,"topicId":"","source":"","videoId":""}
+                            let create = await commonPost('/v3/thread.create',body,getSign('POST','/api/v3/thread.create',{"title":"毒鸡汤","categoryId":27,"content":{"text":text},"position":{},"price":0,"freeWords":0,"attachmentPrice":0,"draft":0,"anonymous":0,"topicId":"","source":"","videoId":""}));
+                            if (create.Meta) {
+                                for (const item of create.Meta.tips) {
+                                    console.log(item.message)
+                                }
+                            }
+                        }
+                    } else {
+                        console.log('默认不发帖，发帖请设置变量IQOO_Create为true')
+                    }
+                }
+            }
             if(task.access == '浏览帖子') {
                 let count = parseInt(task.upper_limit) - task.isFinal;
                 if (count == 0) {
@@ -236,6 +263,31 @@ async function commonPost(url,body,signature) {
                 } else {
                     await $.wait(2000)
                     resolve(JSON.parse(data));
+                }
+            } catch (e) {
+                $.logErr(e, resp)
+            } finally {
+                resolve();
+            }
+        })
+    })
+}
+
+async function textGet() {
+    return new Promise(resolve => {
+        const options = {
+            url: `https://api.btstu.cn/yan/api.php`,
+            headers : {
+            }
+        }
+        $.get(options, async (err, resp, data) => {
+            try {
+                if (err) {
+                    console.log(`${JSON.stringify(err)}`)
+                    console.log(`${$.name} API请求失败，请检查网路重试`)
+                } else {
+                    await $.wait(2000)
+                    resolve(data);
                 }
             } catch (e) {
                 $.logErr(e, resp)
