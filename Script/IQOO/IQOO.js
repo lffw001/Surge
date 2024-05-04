@@ -47,7 +47,6 @@ async function main() {
                     if (task.access == '首次发表评论') {
                         time = Math.floor(Date.now() / 1e3)
                         let create = await commonPost('/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""},getSign('POST','/api/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""}));
-                        console.log(create)
                         if (create.Meta) {
                             for (const item of create.Meta.tips) {
                                 console.log(item.message)
@@ -68,7 +67,6 @@ async function main() {
                     console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
                     for (let i = 0; i < count; i++) {
                         let view = await commonGet(`/v3/view.count?threadId=${threadId}&type=0`, getSign('GET', '/api/v3/view.count', {"threadId": threadId, "type": 0}));
-                        console.log(view)
                         if (view.Meta) {
                             for (const item of view.Meta.tips) {
                                 console.log(item.message)
@@ -86,7 +84,6 @@ async function main() {
                     for (let i = 0; i < count; i++) {
                         //点赞
                         let like = await commonPost('/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":true}}},getSign('POST','/api/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":true}}}));
-                        console.log(like)
                         if (like.Meta) {
                             for (const item of like.Meta.tips) {
                                 console.log(item.message)
@@ -106,7 +103,6 @@ async function main() {
                     console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
                     for (let i = 0; i < count; i++) {
                         let share =  await commonPost('/v3/thread.share',{"threadId":threadId},getSign('POST','/api/v3/thread.share',{"threadId":threadId}));
-                        console.log(share)
                         if (share.Meta) {
                             for (const item of share.Meta.tips) {
                                 console.log(item.message)
@@ -126,7 +122,7 @@ async function main() {
         //查询酷币
         console.log("————————————")
         console.log("查询酷币")
-        let user = await commonGet('/v3/user?userId=5024332',getSign('GET','/api/v3/user',{"userId":id}));
+        let user = await commonGet(`/v3/user?userId=${id}`,getSign('GET','/api/v3/user',{"userId":id}));
         console.log(`拥有酷币: ${user.Data.score}`)
         $.msg($.name, `用户：${id}`, `拥有酷币: ${user.Data.score}`);
     }
