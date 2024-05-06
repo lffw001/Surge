@@ -42,6 +42,7 @@ async function main() {
             if (start.data.unionKey) {
                 let over = await commonGet(`/elimination/game/over?promotionId=${promotionId}&unionKey=${start.data.unionKey}&score=${score}&nickName=${info.data.visitor.nick_name}&avatarUrl=${info.data.visitor.avatar_url}`);
                 console.log(`总得分：${over.data.totalScore}`)
+                await $.wait(2000)
             } else {
                 console.log(start.data.msg)
                 break
