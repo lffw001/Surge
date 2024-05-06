@@ -34,7 +34,7 @@ async function main() {
         let mainpage = await commonGet(`/elimination/mainpage?promotionId=${promotionId}`);
         if (mainpage.data.remainTimes == 0) {
             console.log('游戏次数已用完')
-            return
+            continue
         }
         let score = Math.floor((list[list.length - 1].score - rank.data.mine.score)/mainpage.data.remainTimes);
         for (let i = 0; i < mainpage.data.remainTimes; i++) {
