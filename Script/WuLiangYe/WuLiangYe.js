@@ -11,7 +11,7 @@ let token = ''
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
-    for (const item of IQOO) {
+    for (const item of WuLiangYe) {
         id = item.id;
         token = item.token;
         let info = await commonGet(`/mini/wly/user/info`);
