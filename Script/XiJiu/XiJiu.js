@@ -267,7 +267,7 @@ async function main() {
         console.log("————————————")
         console.log("查询积分")
         getMemberInfo = await commonGet("/garden/Gardenmemberinfo/getMemberInfo");
-        console.log(`拥有积分：${getMemberInfo.data.integration} 拥有酒：${getMemberInfo.data.wine}`)
+        console.log(`拥有积分：${getMemberInfo.data.integration} 拥有酒：${getMemberInfo.data.wine}\n`)
         notice += `用户：${id} 积分：${getMemberInfo.data.integration} 酒：${getMemberInfo.data.wine} `
     }
     if (notice) {

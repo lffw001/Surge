@@ -1,7 +1,9 @@
 const $ = new Env('浓五的酒馆');
 const WuLiangYe = ($.isNode() ? JSON.parse(process.env.WuLiangYe) : $.getjson("WuLiangYe")) || [];
 let promotionId = 'PI662080bf56aae2000a9dae33';
+let signPromotionId = 'PI65e0c0230791e3000a083cd4';
 let token = ''
+let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -16,6 +18,15 @@ async function main() {
         token = item.token;
         let info = await commonGet(`/mini/wly/user/info`);
         console.log(`用户名：${info.data.visitor.nick_name}`)
+        console.log(`开始签到`)
+        let sign = await commonGet(`/promotion/sign/today?promotionId=${signPromotionId}`);
+        if (sign.code == 0) {
+            console.log(sign.data.prize.goodsName)
+        } else {
+            console.log(sign.msg)
+        }
+        console.log("————————————")
+        console.log("开始做任务")
         let taskList = await commonGet(`/promotion/integra/double/task/list?promotionId=${promotionId}&page_no=1&page_size=10`);
         for (const task of taskList.data.list) {
             console.log(`任务：${task.promotionTaskName}`)
@@ -26,6 +37,7 @@ async function main() {
                 console.log('任务已完成')
             }
         }
+        console.log("————————————")
         console.log('开始游戏')
         let rank = await commonGet(`/elimination/ranking?promotionId=${promotionId}`);
         console.log(`当前总得分：${rank.data.mine.score}`)
@@ -34,20 +46,28 @@ async function main() {
         let mainpage = await commonGet(`/elimination/mainpage?promotionId=${promotionId}`);
         if (mainpage.data.remainTimes == 0) {
             console.log('游戏次数已用完')
-            continue
-        }
-        let score = Math.floor((list[list.length - 1].score - rank.data.mine.score)/mainpage.data.remainTimes);
-        for (let i = 0; i < mainpage.data.remainTimes; i++) {
-            let start = await commonGet(`/elimination/game/start?promotionId=${promotionId}`);
-            if (start.data.unionKey) {
-                let over = await commonGet(`/elimination/game/over?promotionId=${promotionId}&unionKey=${start.data.unionKey}&score=${score}&nickName=${info.data.visitor.nick_name}&avatarUrl=${info.data.visitor.avatar_url}`);
-                console.log(`总得分：${over.data.totalScore}`)
-                await $.wait(2000)
-            } else {
-                console.log(start.data.msg)
-                break
+        } else {
+            let score = Math.floor((list[list.length - 1].score - rank.data.mine.score)/mainpage.data.remainTimes);
+            for (let i = 0; i < mainpage.data.remainTimes; i++) {
+                let start = await commonGet(`/elimination/game/start?promotionId=${promotionId}`);
+                if (start.data.unionKey) {
+                    let over = await commonGet(`/elimination/game/over?promotionId=${promotionId}&unionKey=${start.data.unionKey}&score=${score}&nickName=${info.data.visitor.nick_name}&avatarUrl=${info.data.visitor.avatar_url}`);
+                    console.log(`总得分：${over.data.totalScore}`)
+                    await $.wait(2000)
+                } else {
+                    console.log(start.data.msg)
+                    break
+                }
             }
         }
+        console.log("————————————")
+        console.log("查询积分")
+        info = await commonGet(`/mini/wly/user/info`);
+        console.log(`拥有积分: ${info.data.member.points}\n`)
+        notice += `用户：${info.data.visitor.nick_name} 拥有积分: ${info.data.member.points} `
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 

@@ -5,6 +5,7 @@ const IQOO_Create = ($.isNode() ? process.env.IQOO_Create : $.getdata("IQOO_Crea
 let time = ''
 let token = ''
 let xVisitor = ''
+let notice = ''
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -176,8 +177,11 @@ async function main() {
         console.log("————————————")
         console.log("查询酷币")
         let user = await commonGet(`/v3/user?userId=${id}`,getSign('GET','/api/v3/user',{"userId":id}));
-        console.log(`拥有酷币: ${user.Data.score}`)
-        $.msg($.name, `用户：${id}`, `拥有酷币: ${user.Data.score}`);
+        console.log(`拥有酷币: ${user.Data.score}\n`)
+        notice += `用户：${id} 拥有酷币: ${user.Data.score} `
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 
