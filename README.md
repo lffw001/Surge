@@ -16,8 +16,9 @@
 |      辛喜      |         [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XinXi)         | ✅(2024/04/24) |      ✅️      |
 |      习酒      |         [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XiJiu)         | ✅(2024/04/26) |      ✅️      |
 |      IQOO社区      |         [IQOO](https://github.com/xzxxn777/Surge/blob/main/Script/IQOO)          | ✅(2024/05/04) |      ✅️      |
+|      哈根达斯      |         [HGDS](https://github.com/xzxxn777/Surge/blob/main/Script/HGDS)          | ✅(2024/05/06) |      ✅️      |
 
 ------
-### [一键订阅boxjs](http://boxjs.com/#/sub/add/https://raw.githubusercontent.com/xzxxn777/quanx/main/xzxxn.json)
+### [一键订阅boxjs](http://boxjs.com/#/sub/add/https://raw.githubusercontent.com/xzxxn777/Surge/main/xzxxn.json)
 ### [点击直达频道](https://t.me/xzxxn777)
 ### [点击直达群组](https://t.me/xzxxn7777)

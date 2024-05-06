@@ -1,5 +1,7 @@
 const $ = new Env('网易严选-兑换');
 let WYYX = ($.isNode() ? process.env.WYYX : $.getjson("WYYX")) || [];
+//默认第一个用户兑换
+let WYYX_Acc = ($.isNode() ? process.env.WYYX_Acc : $.getdata("WYYX_Acc")) || 0;
 let WYYX_Name = ($.isNode() ? process.env.WYYX_Name : $.getdata("WYYX_Name")) || '';
 let cookie=''
 let token = ''
@@ -12,25 +14,24 @@ async function main() {
         $.msg($.name, '【提示】请先设置要兑换的商品名称');
         return;
     }
-    for (const item of WYYX) {
-        cookie = item.cookie;
-        userId = item.userId;
-        token = item.token;
-        let index = await commonPost(`/xhr/points/index.json`);
-        let actId = index.data.pointExVirtualAct.actId;
-        let actType = index.data.pointExVirtualAct.actType;
-        for (const packet of index.data.pointExVirtualAct.actPackets) {
-            console.log(`${packet.title} 需要 ${packet.needPoint}积分`)
-            if (packet.title.includes(WYYX_Name)) {
-                let actPacketId = packet.actPacketId;
-                let actPacketGiftId = packet.actPacketGiftId;
-                let getActPacket = await commonGet(`/xhr/points/exVitrual/getActPacket.json?csrf_token=${token}&actId=${actId}&actPacketId=${actPacketId}&actPacketGiftId=${actPacketGiftId}&actType=${actType}`);
-                let activationCode = getActPacket.data.actiCode;
-                let activationType = getActPacket.data.actiType;
-                for (let i = 0; i < 30; i++) {
-                    let exchange = await commonPost(`/xhr/points/exVitrual/pointExActivate.json?csrf_token=${token}`,`activationType=${activationType}&actType=${actType}&activationCode=${activationCode}&activationExt=%7B%22actId%22%3A${actId}%2C%22actPacketId%22%3A${actPacketId}%7D`);
-                    console.log(exchange)
-                }
+    cookie = WYYX[WYYX_Acc].cookie;
+    userId = WYYX[WYYX_Acc].userId;
+    token = WYYX[WYYX_Acc].token;
+    console.log(`用户：${userId}开始兑换`)
+    let index = await commonPost(`/xhr/points/index.json`);
+    let actId = index.data.pointExVirtualAct.actId;
+    let actType = index.data.pointExVirtualAct.actType;
+    for (const packet of index.data.pointExVirtualAct.actPackets) {
+        console.log(`${packet.title} 需要 ${packet.needPoint}积分`)
+        if (packet.title.includes(WYYX_Name)) {
+            let actPacketId = packet.actPacketId;
+            let actPacketGiftId = packet.actPacketGiftId;
+            let getActPacket = await commonGet(`/xhr/points/exVitrual/getActPacket.json?csrf_token=${token}&actId=${actId}&actPacketId=${actPacketId}&actPacketGiftId=${actPacketGiftId}&actType=${actType}`);
+            let activationCode = getActPacket.data.actiCode;
+            let activationType = getActPacket.data.actiType;
+            for (let i = 0; i < 30; i++) {
+                let exchange = await commonPost(`/xhr/points/exVitrual/pointExActivate.json?csrf_token=${token}`,`activationType=${activationType}&actType=${actType}&activationCode=${activationCode}&activationExt=%7B%22actId%22%3A${actId}%2C%22actPacketId%22%3A${actPacketId}%7D`);
+                console.log(exchange)
             }
         }
     }

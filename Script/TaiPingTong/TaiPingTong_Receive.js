@@ -1,9 +1,9 @@
 const $ = new Env("太平通-兑换");
 let appVersion = '4.0.2';
 //京东E卡：1元66 2元169 5元120 10元121 20元122 50元144
-let id = ($.isNode() ? process.env.MEIZU_GIFTID : $.getjson("TaiPingTong_GIFTID")) || 144;
+let id = ($.isNode() ? process.env.TaiPingTong_GIFTID : $.getdata("TaiPingTong_GIFTID")) || 144;
 //默认第一个用户兑换
-let TaiPingTong_Acc = ($.isNode() ? process.env.TaiPingTong_Acc : $.getjson("TaiPingTong_Acc")) || 0;
+let TaiPingTong_Acc = ($.isNode() ? process.env.TaiPingTong_Acc : $.getdata("TaiPingTong_Acc")) || 0;
 let TaiPingTong = ($.isNode() ? process.env.TaiPingTong : $.getjson("TaiPingTong")) || [];
 let token = ""
 !(async () => {
