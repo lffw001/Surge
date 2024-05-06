@@ -16,7 +16,7 @@ async function main() {
         sessionKey = item.sessionKey;
         unionid = item.unionid;
         socialhubId = item.socialhubId;
-        console.log(`用户：${mobile}开始任务`)
+        console.log(`用户：${id}开始任务`)
         let check = await commonGet(`/check/token?idType=2&id=${unionid}&token=${token}`,`idType=2&id=${unionid}&token=${token}`)
         if (!check.data.isValid) {
             $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
