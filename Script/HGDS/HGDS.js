@@ -48,17 +48,13 @@ async function getCookie() {
         return
     }
     const sessionKey = $request.headers["X-Hg-Req-Sign-Nonce"].split('==')[0] + '==';
-    const requestBody = $.toObj($request.body);
-    const unionid = requestBody.unionId;
-    if (!unionid) {
-        return
-    }
     const responseDody = $.toObj($response.body);
     if (!responseDody.data || !responseDody.data.socialhubId) {
         return
     }
     const socialhubId = responseDody.data.socialhubId;
     const cardNumber = responseDody.data.cardNumber;
+    const unionid = responseDody.data.thirdPartyId;
     const newData = {"id": cardNumber, "token": token, "sessionKey": sessionKey, "unionid": unionid, "socialhubId": socialhubId};
     const index = HGDS.findIndex(e => e.id == newData.id);
     if (index !== -1) {
