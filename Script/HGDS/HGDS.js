@@ -1,6 +1,7 @@
 const $ = new Env('哈根达斯')
 let sessionKey = '', unionid = '',socialhubId = '', token = ''
 const HGDS = ($.isNode() ? JSON.parse(process.env.HGDS) : $.getjson("HGDS")) || [];
+let notice = ''
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -38,7 +39,10 @@ async function main() {
         }
         let point = await commonPost('/point/account?url=/pages/shop/shop',{"idType":2,"id":unionid,"url":"/pages/shop/shop"})
         console.log(`拥有积心：${point.data[0].availablePoint}`)
-        $.msg($.name, `用户：${getMemberDetail.data.fullName}`, `拥有积心: ${point.data[0].availablePoint}`);
+        notice += `用户：${getMemberDetail.data.fullName} 拥有积心: ${point.data[0].availablePoint}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 

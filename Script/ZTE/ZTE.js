@@ -65,7 +65,7 @@ async function main() {
             }
         }
         info = await commonGet(`method=member.index&format=json&v=v1`);
-        console.log(`拥有积分:${info.data.point}`)
+        console.log(`拥有积分:${info.data.point}\n`)
         notice += `用户名：${info.data.username}  拥有积分:${info.data.point}\n`
     }
     if (notice) {

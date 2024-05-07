@@ -34,8 +34,7 @@ async function main() {
         console.log("查询酷币")
         let home = await commonGet('/v2.member.score_shop/home')
         console.log(`拥有积分：${home.data.score_val}\n`)
-
-        notice += `用户：${id} 拥有积分: ${home.data.score_val} `
+        notice += `用户：${id} 拥有积分: ${home.data.score_val}\n`
     }
     if (notice) {
         $.msg($.name, '', notice);

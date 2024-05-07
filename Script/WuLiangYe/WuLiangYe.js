@@ -66,7 +66,7 @@ async function main() {
         console.log("查询积分")
         info = await commonGet(`/mini/wly/user/info`);
         console.log(`拥有积分: ${info.data.member.points}\n`)
-        notice += `用户：${info.data.visitor.nick_name} 拥有积分: ${info.data.member.points} `
+        notice += `用户：${info.data.visitor.nick_name} 拥有积分: ${info.data.member.points}\n`
     }
     if (notice) {
         $.msg($.name, '', notice);
