@@ -17,6 +17,10 @@ async function main() {
         console.log(`用户：${id}开始任务`)
         console.log('开始签到')
         let sign = await commonGet('/v2.member.score_shop/signSub')
+        if (sign.status == 10) {
+            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
+            continue
+        }
         if (sign.status == 0) {
             let signPage = await commonGet(`/v2.member.score_shop/signPage?yearMonth=${getCurrentMonth}`)
             console.log(`签到成功，获得：${signPage.data.nowDaySignRecord}积分`)

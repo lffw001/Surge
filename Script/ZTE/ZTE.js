@@ -1,5 +1,5 @@
 const $ = new Env('中兴手机商城');
-const ZTE = ($.isNode() ? process.env.ZTE : $.getjson("ZTE")) || [];
+const ZTE = ($.isNode() ? JSON.parse(process.env.ZTE) : $.getjson("ZTE")) || [];
 let token = ''
 let  id = ''
 let notice = '';
@@ -17,6 +17,10 @@ async function main() {
         id = item.id;
         token = item.token;
         let info = await commonGet(`method=member.index&format=json&v=v1`);
+        if (info.data.check_token) {
+            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
+            continue
+        }
         console.log(`用户名：${info.data.username}  积分:${info.data.point}`)
         // 日常任务
         let task = await commonGet(`platform=miniapp&method=task.list&format=json&v=v1`);

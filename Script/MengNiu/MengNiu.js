@@ -1,5 +1,6 @@
 const $ = new Env("蒙牛超级会员");
 let id = ''
+let notice = ''
 let Authorization = ''
 let activeid = '64faa53e8844970001e64920'
 const CryptoJS = createCryptoJS()
@@ -179,8 +180,11 @@ async function main() {
         console.log("————————————")
         console.log("营养值查询")
         let user = await mcommonPost("/xcx/m/user",encrypt({"token":token,"b":2617,"lat":"","lng":""}))
-        console.log(`拥有营养值：${user.data.user.proteinBalance}`)
-        $.msg($.name, `用户：${userId}`, `拥有营养值: ${user.data.user.proteinBalance}`);
+        console.log(`拥有营养值：${user.data.user.proteinBalance}\n`)
+        notice += `用户：${userId} 拥有营养值：${user.data.user.proteinBalance}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 

@@ -178,7 +178,7 @@ async function main() {
         console.log("查询酷币")
         let user = await commonGet(`/v3/user?userId=${id}`,getSign('GET','/api/v3/user',{"userId":id}));
         console.log(`拥有酷币: ${user.Data.score}\n`)
-        notice += `用户：${id} 拥有酷币: ${user.Data.score} `
+        notice += `用户：${id} 拥有酷币: ${user.Data.score}\n`
     }
     if (notice) {
         $.msg($.name, '', notice);

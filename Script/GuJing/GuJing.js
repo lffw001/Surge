@@ -1,5 +1,6 @@
 const $ = new Env('古井贡酒');
 const GuJing = ($.isNode() ? process.env.GuJing : $.getjson("GuJing")) || [];
+let notice = ''
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -84,9 +85,12 @@ async function main() {
         await $.wait(5000);
         console.log("\n——————")
         let info = await commonGet("/member/info");
-        console.log(`拥有积分: ${info.content.vipMemberPointDTO.getPoint}`)
-        $.msg($.name, `用户：${memberId}`, `拥有积分: ${info.content.vipMemberPointDTO.getPoint}`);
+        console.log(`拥有积分: ${info.content.vipMemberPointDTO.getPoint}\n`)
+        notice += `用户：${memberId} 拥有积分: ${info.content.vipMemberPointDTO.getPoint}\n`
         await $.wait(5000);
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 
