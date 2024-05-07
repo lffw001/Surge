@@ -1,5 +1,6 @@
 const $ = new Env('涌鑫充电');
 const YongXin = ($.isNode() ? process.env.YongXin : $.getjson("YongXin")) || [];
+let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -54,8 +55,11 @@ async function main() {
         console.log("————————————")
         //查询积分
         let index = await commonPost("/index",{"userId":userId})
-        console.log(`拥有积分: ${index.ret_module.playerPoints.points}`)
-        $.msg($.name, `用户：${userId}`, `拥有积分: ${index.ret_module.playerPoints.points}`);
+        console.log(`拥有积分: ${index.ret_module.playerPoints.points}\n`)
+        notice += `用户：${userId} 拥有积分: ${index.ret_module.playerPoints.points}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 

@@ -1,6 +1,7 @@
 const $ = new Env('网易严选');
 let WYYX = ($.isNode() ? process.env.WYYX : $.getjson("WYYX")) || [];
 let cookie=''
+let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -64,8 +65,11 @@ async function main() {
         console.log("————————————")
         console.log("积分查询")
         let getPoint = await commonGet(`/act-attendance/att/v4/index`);
-        console.log(`拥有积分: ${getPoint.data.points}`)
-        $.msg($.name, `用户：${userId}`, `拥有积分: ${getPoint.data.points}`);
+        console.log(`拥有积分: ${getPoint.data.points}\n`)
+        notice += `用户：${userId}拥有积分: ${getPoint.data.points}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 
