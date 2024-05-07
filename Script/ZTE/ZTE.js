@@ -176,7 +176,12 @@ async function commonPost(body) {
     })
 }
 function createSign(params) {
-    let mergedParams = Object.fromEntries(new URLSearchParams(params).entries());
+    let mergedParams = {};
+    let paramsArr = params.split('&')
+    for(let i = 0,len = paramsArr.length;i < len;i++){
+        let arr = paramsArr[i].split('=')
+        mergedParams[arr[0]] = arr[1];
+    }
     const sortedKeys = Object.keys(mergedParams).sort();
     let signString = '';
     sortedKeys.forEach(key => {
