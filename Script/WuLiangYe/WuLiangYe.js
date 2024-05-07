@@ -30,11 +30,13 @@ async function main() {
         let taskList = await commonGet(`/promotion/integra/double/task/list?promotionId=${promotionId}&page_no=1&page_size=10`);
         for (const task of taskList.data.list) {
             console.log(`任务：${task.promotionTaskName}`)
-            if (task.processTarget > task.processRate && task.promotionTaskType == 'SIGN_IN') {
-                let sign = await commonGet(`/promotion/integra/double/sign/in?taskPromId=${task.promotionId}`);
-                console.log(sign.success)
-            } else {
-                console.log('任务已完成')
+            if (task.promotionTaskType == 'SIGN_IN') {
+                if (task.taskStatus == 2) {
+                    console.log('任务已完成')
+                } else {
+                    let sign = await commonGet(`/promotion/integra/double/sign/in?taskPromId=${task.promotionId}`);
+                    console.log(sign.success)
+                }
             }
         }
         console.log("————————————")

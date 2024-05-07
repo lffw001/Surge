@@ -1,7 +1,8 @@
-const $ = new Env('中兴手机');
-const zhongxing_arr = ($.isNode() ? process.env.ZHONGXING_TOKEN : $.getjson("ZHONGXING_ACCESSTOKEN")) || [];
-let accessToken = ''
-let  uid = ''
+const $ = new Env('中兴手机商城');
+const ZTE = ($.isNode() ? process.env.ZTE : $.getjson("ZTE")) || [];
+let token = ''
+let  id = ''
+let notice = '';
 !(async () => {
 
     if (typeof $request != "undefined") {
@@ -12,19 +13,19 @@ let  uid = ''
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
-    for (const item of zhongxing_arr) {
-        uid = item.uid;
-        accessToken = item.token;
+    for (const item of ZTE) {
+        id = item.id;
+        token = item.token;
         let info = await commonGet(`method=member.index&format=json&v=v1`);
         console.log(`用户名：${info.data.username}  积分:${info.data.point}`)
         // 日常任务
         let task = await commonGet(`platform=miniapp&method=task.list&format=json&v=v1`);
         if (!task.data.checkin_info.checkin_status) {
             let checkIn = await commonGet(`method=member.checkIn.add&format=json&v=v1`);
-            if (checkIn.data.status == "success") {
-                console.log(`连续签到:${task.data.checkin_info.checkin_days + 1}天`)
+            if (checkIn.errorcode == 0) {
+                console.log(`签到成功获得：${checkIn.data.currentCheckInPoint}积分 连续签到:${task.data.checkin_info.checkin_days + 1}天`)
             } else {
-                console.log(`签到失败 ${JSON.stringify(checkIn)}`)
+                console.log(checkIn.msg)
             }
         }
         for (const itemTask of task.data.tasks) {
@@ -45,16 +46,32 @@ async function main() {
                     // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
                     // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
                     // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
+                    let check = await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
+                    if (check.errorcode == 0) {
+                        console.log(`领取成功`)
+                    } else {
+                        console.log(check.msg)
+                    }
                     break
                 case "tocheck":
-                    await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
+                    check = await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
+                    if (check.errorcode == 0) {
+                        console.log(`领取成功`)
+                    } else {
+                        console.log(check.msg)
+                    }
                     break
                 case "finish":
                     break
                 default:
             }
         }
+        info = await commonGet(`method=member.index&format=json&v=v1`);
+        console.log(`拥有积分:${info.data.point}`)
+        notice += `用户名：${info.data.username}  拥有积分:${info.data.point}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 
@@ -67,35 +84,35 @@ async function getCookie() {
     if (!body.data || !body.data.username) {
         return
     }
-    const uid = body.data.username;
-    const newData = {"uid": uid, "token": token.replace("Bearer ","")};
-    const index = zhongxing_arr.findIndex(e => e.uid == newData.uid);
+    const id = body.data.username;
+    const newData = {"id": id, "token": token.replace("Bearer ","")};
+    const index = ZTE.findIndex(e => e.id == newData.id);
     if (index !== -1) {
-        if (zhongxing_arr[index].token == newData.token) {
+        if (ZTE[index].token == newData.token) {
             return
         } else {
-            zhongxing_arr[index] = newData;
+            ZTE[index] = newData;
             console.log(newData.token)
-            $.msg($.name, `🎉用户${newData.uid}更新token成功!`, ``);
+            $.msg($.name, `🎉用户${newData.id}更新token成功!`, ``);
         }
     } else {
-        zhongxing_arr.push(newData)
+        ZTE.push(newData)
         console.log(newData.token)
-        $.msg($.name, `🎉新增用户${newData.uid}成功!`, ``);
+        $.msg($.name, `🎉新增用户${newData.id}成功!`, ``);
     }
-    $.setjson(zhongxing_arr, "ZHONGXING_ACCESSTOKEN");
+    $.setjson(ZTE, "ZTE");
 }
 
 async function commonGet(query) {
     return new Promise(resolve => {
         let sign = createSign(query);
         const options = {
-            url: `https://www.ztemall.com/index.php/topapi?${query}&sign=${sign}&accessToken=${accessToken}`,
+            url: `https://www.ztemall.com/index.php/topapi?${query}&sign=${sign}&accessToken=${token}`,
             headers: {
                 "Host": "www.ztemall.com",
                 "Connection": "keep-alive",
                 "xweb_xhr": "1",
-                "Authorization": `Bearer ${accessToken}`,
+                "Authorization": `Bearer ${token}`,
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.49(0x1000000) NetType/WIFI Language/zh_CN",
                 "Content-Type": "application/json",
                 "Accept": "*/*",
@@ -130,7 +147,7 @@ async function commonPost(body) {
                 "Host": "www.ztemall.com",
                 "Connection": "keep-alive",
                 "xweb_xhr": "1",
-                "Authorization": `Bearer ${accessToken}`,
+                "Authorization": `Bearer ${token}`,
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 MicroMessenger/8.0.49(0x1000000) NetType/WIFI Language/zh_CN",
                 "Content-Type": "application/x-www-form-urlencoded",
                 "Accept": "*/*",
@@ -138,7 +155,7 @@ async function commonPost(body) {
                 "Accept-Encoding": "gzip, deflate, br",
                 "Accept-Language": "zh-CN,zh;q=0.9",
             },
-            body:`${body}&sign=${sign}&accessToken=${accessToken}`
+            body:`${body}&sign=${sign}&accessToken=${token}`
         }
         $.post(options, async (err, resp, data) => {
             try {
