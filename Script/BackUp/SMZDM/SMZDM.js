@@ -9,29 +9,29 @@ const SMZDM = ($.isNode() ? process.env.SMZDM : $.getjson("SMZDM")) || [];
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
-    for (const item of SMZDM) {
+    for (const item of JSON.parse(SMZDM)) {
         id = item.id;
         cookie = item.cookie;
         console.log(`用户：${id}开始任务`)
         //签到
         console.log("开始签到")
         let time = new Date().getTime();
-        let sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-        let getToken = await commonPost("https://user-api.smzdm.com/robot/token",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+        let sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+        let getToken = await commonPost("https://user-api.smzdm.com/robot/token",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
         token = getToken.data.token
         time = new Date().getTime();
-        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-        let checkin = await commonPost("https://user-api.smzdm.com/checkin",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+        let checkin = await commonPost("https://user-api.smzdm.com/checkin",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
         console.log(checkin.error_msg);
         time = new Date().getTime();
-        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-        let reward = await commonPost("https://user-api.smzdm.com/checkin/all_reward",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+        let reward = await commonPost("https://user-api.smzdm.com/checkin/all_reward",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
         if (reward.error_code === 0) {
             console.log(`${reward.data.normal_reward.top_title}：${reward.data.normal_reward.gift.content_str}`)
         }
         time = new Date().getTime();
-        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-        let show = await commonPost("https://user-api.smzdm.com/checkin/show_view_v2",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+        sign = md5(`basic_v=0&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+        let show = await commonPost("https://user-api.smzdm.com/checkin/show_view_v2",`basic_v=0&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
         for (const item of show.data.rows) {
             if (item.cell_title === '做任务得奖励') {
                 for (const activity of item.cell_data.activity_task.accumulate_list.activity_list) {
@@ -43,16 +43,16 @@ async function main() {
                         console.log(`任务已完成`);
                     } else {
                         //达人关注推荐
-                        if (task.task_name === "达人关注推荐") {
+                        if (task.task_name === "达人关注推荐1") {
                             let count = task.task_even_num - task.task_finished_num;
                             time = new Date().getTime();
-                            sign = md5(`basic_v=0&f=android&nav_id=${task.task_redirect_url.link_val}&page=1&time=${time}&type=user&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                            let result = await commonPost("https://dingyue-api.smzdm.com/tuijian/search_result",`basic_v=0&f=android&nav_id=${task.task_redirect_url.link_val}&page=1&sign=${sign}&time=${time}&type=user&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                            sign = md5(`basic_v=0&f=android&nav_id=${task.task_redirect_url.link_val}&page=1&time=${time}&type=user&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                            let result = await commonPost("https://dingyue-api.smzdm.com/tuijian/search_result",`basic_v=0&f=android&nav_id=${task.task_redirect_url.link_val}&page=1&sign=${sign}&time=${time}&type=user&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                             for (const article of result.data.rows) {
                                 while (count > 0) {
                                     time = new Date().getTime();
-                                    sign = md5(`basic_v=0&daren_id=${article.keyword}&f=android&follow_user_times_today=1&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                    let follow = await commonGet(`https://article-api.smzdm.com/dingyue/daren_follow_recommend?basic_v=0&daren_id=${article.keyword}&f=android&follow_user_times_today=1&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                    sign = md5(`basic_v=0&daren_id=${article.keyword}&f=android&follow_user_times_today=1&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                    let follow = await commonGet(`https://article-api.smzdm.com/dingyue/daren_follow_recommend?basic_v=0&daren_id=${article.keyword}&f=android&follow_user_times_today=1&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                     console.log(follow)
                                     count--;
                                 }
@@ -63,16 +63,16 @@ async function main() {
                             if (task.task_status == 3) {
                                 console.log(`领取奖励`);
                                 time = new Date().getTime();
-                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 console.log(receive.data.reward_msg);
                             } else {
                                 time = new Date().getTime();
-                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let finish = await commonPost("https://user-api.smzdm.com/task/event_view_article_sync",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let finish = await commonPost("https://user-api.smzdm.com/task/event_view_article_sync",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 time = new Date().getTime();
-                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&robot_token=${token}&sign=${sign}&task_even_num=${task.task_even_num}&task_event_type=${task.task_event_type}&task_finished_num=${task.task_finished_num}&task_id=${task.task_id}&task_type=&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 console.log(receive.data.reward_msg);
                             }
                         }
@@ -81,16 +81,16 @@ async function main() {
                             if (task.task_status == 3) {
                                 console.log(`领取奖励`);
                                 time = new Date().getTime();
-                                sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 console.log(receive.data.reward_msg);
                             } else {
                                 time = new Date().getTime();
-                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let finish = await commonPost("https://user-api.smzdm.com/task/event_view_article",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let finish = await commonPost("https://user-api.smzdm.com/task/event_view_article",`article_id=${task.article_id}&basic_v=0&channel_id=${task.channel_id}&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 time = new Date().getTime();
-                                sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                 console.log(receive.data.reward_msg);
                             }
                         }
@@ -98,16 +98,16 @@ async function main() {
                         if (task.task_name === "分享社区文章") {
                             let count = task.task_even_num - task.task_finished_num;
                             time = new Date().getTime();
-                            sign = md5(`basic_v=0&channel_id=&f=android&offset=0&order=0&page=1&tab=2&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                            let articles = await commonGet(`https://article-api.smzdm.com/ranking_list/articles?basic_v=0&channel_id=&f=android&offset=0&order=0&page=1&sign=${sign}&tab=2&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                            sign = md5(`basic_v=0&channel_id=&f=android&offset=0&order=0&page=1&tab=2&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                            let articles = await commonGet(`https://article-api.smzdm.com/ranking_list/articles?basic_v=0&channel_id=&f=android&offset=0&order=0&page=1&sign=${sign}&tab=2&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                             for (const article of articles.data.rows) {
                                 while (count > 0) {
                                     time = new Date().getTime();
-                                    sign = md5(`article_id=${article.article_id}&basic_v=0&channel_id=${article.channel_id}&f=android&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                    let share = await commonPost("https://user-api.smzdm.com/share/article_reward",`article_id=${article.article_id}&basic_v=0&channel_id=${article.channel_id}&f=android&sign=${sign}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                    sign = md5(`article_id=${article.article_id}&basic_v=0&channel_id=${article.channel_id}&f=android&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                    let share = await commonPost("https://user-api.smzdm.com/share/article_reward",`article_id=${article.article_id}&basic_v=0&channel_id=${article.channel_id}&f=android&sign=${sign}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                     time = new Date().getTime();
-                                    sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
-                                    let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.0&weixin=1&zhuanzai_ab=a`)
+                                    sign = md5(`basic_v=0&f=android&robot_token=${token}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a&key=apr1$AwP!wRRT$gJ/q.X24poeBInlUJC`).toUpperCase();
+                                    let receive = await commonPost("https://user-api.smzdm.com/task/activity_task_receive",`basic_v=0&f=android&robot_token=${token}&sign=${sign}&task_id=${task.task_id}&time=${time}&v=11.0.5&weixin=1&zhuanzai_ab=a`)
                                     console.log(receive.data.reward_msg);
                                     count--;
                                 }
@@ -172,7 +172,7 @@ async function commonPost(url,body = '') {
                 "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148/smzdm 11.0.0 rv:147.2 (iPhone 14 Pro; iOS 17.5; zh_CN)/iphone_smzdmapp/11.0.0/wkwebview/jsbv_1.0.0",
                 "Cookie": cookie,
                 "sec-fetch-dest": "empty",
-                "referer": "https://h5.smzdm.com/user/pack/?f=android&s=hYvr4wJOHZo/ATaM70089wIrIbNUHAUidKbTZgOTOIGdrfrmrIaWtz0ftUYsoTTYW1lBzGyffk=&device=iPhone15,2&v=11.0.0"
+                "referer": "https://h5.smzdm.com/user/pack/?f=android&s=hYvr4wJOHZo/ATaM70089wIrIbNUHAUidKbTZgOTOIGdrfrmrIaWtz0ftUYsoTTYW1lBzGyffk=&device=iPhone15,2&v=11.0.5"
             },
             body: body
         }
