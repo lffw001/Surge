@@ -37,15 +37,13 @@ async function main() {
                         if (start?.data?.res_sec){
                             await $.wait(1000*start?.data?.res_sec)
                         }
-                        console.log(await commonPost(`page_id=${pageId}&task_id=${itemTask.task_id}&method=task.finish&format=json&v=v1`))
+                        let finish = await commonPost(`page_id=${pageId}&task_id=${itemTask.task_id}&method=task.finish&format=json&v=v1`);
+                        if (finish.errorcode == 0) {
+                            console.log(`完成任务`)
+                        } else {
+                            console.log(finish.msg)
+                        }
                     }
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`)
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
-                    // await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
                     let check = await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
                     if (check.errorcode == 0) {
                         console.log(`领取成功`)
