@@ -1,5 +1,6 @@
 const $ = new Env("茄皇");
 let token = '';
+let notice = ''
 let step = ["种植番茄","发育期","幼苗期","开花期","结果期","收获期"];
 let prizeType = [{"sun":"阳光"},{"dice":"烤包子"},{"gold":"调料包"}];
 let QieHuang_Body = ($.isNode() ? process.env.QieHuang_Body : $.getjson("QieHuang_Body")) || [];
@@ -386,8 +387,11 @@ async function main() {
         console.log("获取库存信息")
         let get = await commonGet("/userInfo/get")
         console.log(`每日任务助力码：${get.data.userId}`)
-        console.log(`调料包：${get.data.gold} 番茄：${get.data.score} 阳光：${get.data.sun}`)
-        $.msg($.name, `用户：${wid}`, `拥有调料包：${get.data.gold} 番茄：${get.data.score} 阳光：${get.data.sun}`);
+        console.log(`调料包：${get.data.gold} 番茄：${get.data.score} 阳光：${get.data.sun}\n`)
+        notice += `用户：${wid} 拥有调料包：${get.data.gold} 番茄：${get.data.score} 阳光：${get.data.sun}\n`;
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 

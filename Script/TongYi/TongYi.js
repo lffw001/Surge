@@ -2,6 +2,7 @@ const $ = new Env('统一');
 const TongYi = ($.isNode() ? process.env.TongYi : $.getjson("TongYi")) || [];
 let TongYi_Help = ($.isNode() ? process.env.TongYi_Help : $.getjson("TongYi_Help")) || [];
 let helpCodeArr = [11068728376,11068885418,11069284748,10325418614,11069577738,10985794048,11070138246,11070140152,11070141763]
+let notice = ''
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -58,8 +59,11 @@ async function main() {
         console.log("——————\n")
         //查询积分
         let getSimpleAccountInfo = await commonPost("/onecrm/point/myPoint/getSimpleAccountInfo",{"appid":"wx532ecb3bdaaf92f9","basicInfo":{"vid":6013753979957,"vidType":2,"bosId":4020112618957,"productId":1,"productInstanceId":3171023957,"productVersionId":"30044","merchantId":2000020692957,"tcode":"weimob","cid":176205957},"extendInfo":{"wxTemplateId":7526,"childTemplateIds":[{"customId":90004,"version":"crm@0.1.11"},{"customId":90002,"version":"ec@42.3"},{"customId":90006,"version":"hudong@0.0.201"},{"customId":90008,"version":"cms@0.0.419"}],"analysis":[],"quickdeliver":{"enable":false},"bosTemplateId":1000001420,"youshu":{"enable":false},"source":1,"channelsource":5,"refer":"cms-usercenter","mpScene":1089},"queryParameter":{"tracePromotionId":"100039234","tracepromotionid":"100039234"},"i18n":{"language":"zh","timezone":"8"},"pid":"4020112618957","storeId":"0","targetBasicInfo":{"productInstanceId":3168798957},"request":{},"tracePromotionId":"100039234","tracepromotionid":"100039234"})
-        console.log(`拥有积分: ${getSimpleAccountInfo.data.totalPoint}`)
-        $.msg($.name, `用户：${memberId}`, `拥有积分: ${getSimpleAccountInfo.data.totalPoint}`);
+        console.log(`拥有积分: ${getSimpleAccountInfo.data.totalPoint}\n`)
+        notice += `用户：${memberId} 拥有积分: ${getSimpleAccountInfo.data.totalPoint}\n`
+    }
+    if (notice) {
+        $.msg($.name, '', notice);
     }
 }
 
