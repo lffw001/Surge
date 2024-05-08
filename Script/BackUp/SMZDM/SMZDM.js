@@ -9,6 +9,7 @@ const SMZDM = ($.isNode() ? process.env.SMZDM : $.getjson("SMZDM")) || [];
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
+    console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
     for (const item of JSON.parse(SMZDM)) {
         id = item.id;
         cookie = item.cookie;

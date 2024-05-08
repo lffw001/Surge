@@ -10,6 +10,7 @@ let token = ''
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
+    console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
     if (!WYYX_Name) {
         $.msg($.name, '【提示】请先设置要兑换的商品名称');
         return;

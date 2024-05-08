@@ -11,6 +11,7 @@ let notice = '';
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
+    console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
     for (const item of WYYX) {
         cookie = item.cookie;
         userId = item.userId;

@@ -2,17 +2,17 @@ const $ = new Env('蒙牛超级会员-快乐连蒙');
 let MengNiu = ($.isNode() ? process.env.MengNiu : $.getjson("MengNiu")) || [];
 let token = ''
 let id = ''
-let activeid = '64faa53e8844970001e64920'
+let activeid = '6502e2a5987f890001d7790b'
 !(async () => {
     await main();
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
-    for (const item of MengNiu) {
+    for (const item of JSON.parse(MengNiu)) {
         uid = item.userId;
         console.log(`用户：${uid}开始任务`)
         let Code2 = {"uid":`${uid}`,"lng":"118.3471240234375","lat":"32.3110400390625"}
-        let login = await commonPost("/user/login",{"Code":"4efd6e212b1ede9593674f7f00db92c4","Code2":JSON.stringify(Code2),"activeid":activeid,"channel":"40"})
+        let login = await commonPost("/user/login",{"Code":"388c636887bc64979b9e8840692c60fc","Code2":JSON.stringify(Code2),"activeid":activeid,"channel":"40"})
         token = login.token
         id = login.id
         let taskList = await commonPost('/task/user/v1/list',{"roleId":id,"sActiveId":activeid,"taskGroup":1})
@@ -50,7 +50,7 @@ async function commonPost(url,body) {
             url: `https://hserver.moxigame.cn/istio/grpc-gate${url}`,
             headers: {
                 'Accept': '*/*',
-                'encode': 'false',
+                'encode': 'true',
                 'uid': id,
                 'Authorization': token,
                 'sec-fetch-site': 'same-site',
