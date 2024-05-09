@@ -1,5 +1,6 @@
-const $ = new Env('涌鑫充电');
+const $ = new Env('富连e充');
 const YongXin = ($.isNode() ? process.env.YongXin : $.getjson("YongXin")) || [];
+let YongXin_Exchange = ($.isNode() ? process.env.YongXin_Exchange : $.getdata("YongXin_Exchange")) || false;
 let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
@@ -44,13 +45,15 @@ async function main() {
         let goods = await commonPost("/goods/list",{"userId":userId})
         for (const good of goods.ret_module.list) {
             console.log(`商品：${good.name} 库存：${good.inventory} 需要积分：${good.points}`)
-            if (good.name.includes("微信") && wxOpenId) {
-                let wxExchange = await commonPost("/wxExchange",{"goodsId":good.id,"userId":userId,"openId":wxOpenId,"appId":"wx69e931b913fc8e79"})
-                console.log(wxExchange.ret_msg)
-            }
-            if (good.name.includes("支付宝") && aliPayOpenId) {
-                let wxExchange = await commonPost("/aliPayExchange",{"goodsId":good.id,"userId":userId,"aliPayOpenId":aliPayOpenId,"appId":"2021003132662022"})
-                console.log(wxExchange.ret_msg)
+            if (YongXin_Exchange) {
+                if (good.name.includes("微信") && wxOpenId) {
+                    let wxExchange = await commonPost("/wxExchange",{"goodsId":good.id,"userId":userId,"openId":wxOpenId,"appId":"wx69e931b913fc8e79"})
+                    console.log(wxExchange.ret_msg)
+                }
+                if (good.name.includes("支付宝") && aliPayOpenId) {
+                    let exchangeCheck = await commonPost("/exchangeCheck",{"goodsId":good.id,"type":good.type,"userId":userId})
+                    console.log(exchangeCheck.ret_msg)
+                }
             }
         }
         console.log("————————————")

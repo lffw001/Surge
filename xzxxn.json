@@ -72,6 +72,29 @@
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/WYYX/WYYX.png",
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/WYYX/WYYX.png"
       ]
+    },
+    {
+      "id": "YongXin",
+      "name": "富连e充兑换",
+      "keys": [
+        "YongXin_Exchange"
+      ],
+      "settings": [
+        {
+          "id": "YongXin_Exchange",
+          "name": "是否兑换",
+          "val": "",
+          "type": "text",
+          "desc": "默认不兑换"
+        }
+      ],
+      "author": "@xzxxn777",
+      "repo": "https://github.com/xzxxn777/Surge",
+      "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/YongXin/YongXin.js",
+      "icons": [
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/YongXin/YongXin.jpg",
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/YongXin/YongXin.jpg"
+      ]
     }
   ]
 }
