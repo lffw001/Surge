@@ -18,6 +18,10 @@ async function main() {
         id = item.id;
         token = item.token;
         let info = await commonGet(`/mini/wly/user/info`);
+        if (info.code == 201701) {
+            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
+            continue
+        }
         console.log(`用户名：${info.data.visitor.nick_name}`)
         console.log(`开始签到`)
         let sign = await commonGet(`/promotion/sign/today?promotionId=${signPromotionId}`);
