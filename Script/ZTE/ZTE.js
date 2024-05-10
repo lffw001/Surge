@@ -35,8 +35,8 @@ async function main() {
         }
         for (const itemTask of task.data.tasks) {
             console.log(`任务:${itemTask.title} ${itemTask.subtitle} 状态:${itemTask.btn.desc}`)
-            switch (itemTask.btn.status) {
-                case "todo":
+            switch (itemTask.btn.desc) {
+                case "去参与":
                     for (const pageId of itemTask.task_data.page_ids) {
                         let start = await commonPost(`page_id=${pageId}&task_id=${itemTask.task_id}&method=task.start&format=json&v=v1`);
                         if (start?.data?.res_sec){
@@ -56,7 +56,7 @@ async function main() {
                         console.log(check.msg)
                     }
                     break
-                case "tocheck":
+                case "立即领取":
                     check = await commonGet(`task_id=${itemTask.task_id}&method=task.check&format=json&v=v1&`);
                     if (check.errorcode == 0) {
                         console.log(`领取成功`)
@@ -64,7 +64,7 @@ async function main() {
                         console.log(check.msg)
                     }
                     break
-                case "finish":
+                case "已完成":
                     break
                 default:
             }
