@@ -34,7 +34,7 @@ async function main() {
 }
 
 async function getCookie() {
-    let extraData = $request.headers["extra-data"];
+    let extraData = $request.headers["extra-data"] || $request.headers["Extra-Data"];
     if (!extraData) {
         return
     }
