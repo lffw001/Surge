@@ -18,9 +18,9 @@ async function main() {
         console.log(name);
         notice += `${name}\n`;
         for (const data of item.data) {
-            console.log(`用户：${id}开始签到`)
             let id = data.id, appId = data.appId, kdtId = data.kdtId, token = data.token, extraData = data.extraData;
-            let checkin = await commonGet(`checkinId=${checkinId}&app_id=${appId}&kdt_id=${kdtId}&access_token=${token}`);
+            console.log(`用户：${id}开始签到`)
+            let checkin = await commonGet(`checkinId=${checkinId}&app_id=${appId}&kdt_id=${kdtId}&access_token=${token}`,extraData);
             console.log(`签到结果:${checkin.msg}\n`)
             notice += `用户:${id}  签到结果:${checkin.msg}\n`;
         }
@@ -52,7 +52,7 @@ async function getCookie() {
     const data = {"id": id, "appId": appId, "kdtId": kdtId, "token": token, "extraData":extraData};
     const existingIndex = YouZan.findIndex(e => e.checkinId == newData.checkinId);
     if (existingIndex !== -1) {
-        const index = YouZan[existingIndex].findIndex(e => e.id == data.id);
+        const index = YouZan[existingIndex].data.findIndex(e => e.id == data.id);
         if (index !== -1) {
             if (YouZan[existingIndex].data[index].token == data.token) {
                 return
@@ -77,7 +77,7 @@ async function getCookie() {
     $.setjson(YouZan, "YouZan");
 }
 
-async function commonGet(url) {
+async function commonGet(url,extraData) {
     return new Promise(resolve => {
         const options = {
             url: `https://h5.youzan.com/wscump/checkin/checkinV2.json?${url}`,
