@@ -62,7 +62,7 @@ async function getCookie() {
                 $.msg($.name, `${checkinId}`, `🎉用户${data.id}更新token成功!`);
             }
         } else {
-            YouZan[existingIndex].data.push(newData)
+            YouZan[existingIndex].data.push(data)
             console.log(JSON.stringify(data))
             $.msg($.name, `${checkinId}`, `🎉新增用户${data.id}成功!`);
         }
