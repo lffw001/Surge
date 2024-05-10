@@ -1,6 +1,6 @@
 const $ = new Env('有赞');
 const YouZan = ($.isNode() ? JSON.parse(process.env.YouZan) : $.getjson("YouZan")) || [];
-let activityArr = [{"12063":"SKG会员商城"},{"dice":"烤包子"},{"gold":"调料包"}];
+let activityArr = [{"12063":"SKG会员商城"}];
 let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
