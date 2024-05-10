@@ -14,7 +14,10 @@ async function main() {
     console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
     for (const item of YouZan) {
         let checkinId = item.checkinId;
-        let name = activityArr.find(item => checkinId in item)[checkinId] || checkinId;
+        let name = checkinId
+        if (activityArr.find(item => checkinId in item)) {
+            name = activityArr.find(item => checkinId in item)[checkinId];
+        }
         console.log(name);
         notice += `${name}\n`;
         for (const data of item.data) {
@@ -70,7 +73,7 @@ async function getCookie() {
         console.log("发现新的签到活动")
         $.msg($.name, `🎉发现新的签到活动!`);
         YouZan.push(newData)
-        YouZan[0].data.push(data)
+        newData.data.push(data)
         console.log(JSON.stringify(data))
         $.msg($.name, `${checkinId}`, `🎉新增用户${data.id}成功!`);
     }
