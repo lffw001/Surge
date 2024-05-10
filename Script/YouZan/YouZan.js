@@ -19,15 +19,14 @@ async function main() {
             name = activityArr.find(item => checkinId in item)[checkinId];
         }
         console.log(name);
-        notice += `${name} `;
+        notice += `${name}\n`;
         for (const data of item.data) {
             let id = data.id, appId = data.appId, kdtId = data.kdtId, token = data.token, extraData = data.extraData;
             console.log(`用户：${id}开始签到`)
             let checkin = await commonGet(`checkinId=${checkinId}&app_id=${appId}&kdt_id=${kdtId}&access_token=${token}`,extraData);
             console.log(`签到结果:${checkin.msg}\n`)
-            notice += `用户:${id}  签到结果:${checkin.msg} `;
+            notice += `用户:${id}  签到结果:${checkin.msg}\n`;
         }
-        notice += `\n`;
     }
     if (notice) {
         $.msg($.name, '', notice);
