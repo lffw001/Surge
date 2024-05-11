@@ -1,6 +1,6 @@
 const $ = new Env('有赞');
 const YouZan = ($.isNode() ? JSON.parse(process.env.YouZan) : $.getjson("YouZan")) || [];
-let activityArr = [{"12063":"SKG会员商城"}];
+let activityArr = [{"12063":"SKG会员商城"},{"99":"魅族商城Lite"},{"2162835":"PANDAER 会员商店"},{"3520910":"Achock官方商店"},{"2187565":"蜜蜂惊喜社"},{"2923467":"红之旗舰店"},{"2910869":"FicceCode菲诗蔻官方商城"},{"2386563":"HBN颜究所"},{"1597464":"Xbox 聚乐部"},{"3347128":"松鲜鲜调味品"},{"2299510":"燕京啤酒电商"},{"18415":"得宝Tempo"}];
 let notice = '';
 !(async () => {
     if (typeof $request != "undefined") {
@@ -24,6 +24,10 @@ async function main() {
             let id = data.id, appId = data.appId, kdtId = data.kdtId, token = data.token, extraData = data.extraData;
             console.log(`用户：${id}开始签到`)
             let checkin = await commonGet(`checkinId=${checkinId}&app_id=${appId}&kdt_id=${kdtId}&access_token=${token}`,extraData);
+            if (checkin.code == -1) {
+                $.msg($.name, `${name} 用户：${id}`, `token已过期，请重新获取`);
+                continue
+            }
             console.log(`签到结果:${checkin.msg}\n`)
             notice += `用户:${id}  签到结果:${checkin.msg}\n`;
         }
