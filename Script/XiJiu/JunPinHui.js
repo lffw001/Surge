@@ -22,7 +22,7 @@ async function main() {
             console.log("已签到")
         } else {
             let sign = await commonPost(`/customer/daily/signIn`,{"channelCode":"xj_mall_wx_applet"})
-            console.log(sign.data)
+            console.log(`签到获得：${sign.data.pointValue}积分`)
         }
         //查询积分
         console.log("————————————")
