@@ -13,7 +13,7 @@
 |      网易严选       |          [WYYX](https://github.com/xzxxn777/Surge/blob/main/Script/WYYX)          | ✅(2024/04/24) |     ✅️      |
 |      涌鑫充电       |       [YongXin](https://github.com/xzxxn777/Surge/blob/main/Script/YongXin)       | ✅(2024/04/24) |     ✅️      |
 |       辛喜        |     [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/BackUp/XinXi)      | ✅(2024/04/24) |      ❌️      |
-|       习酒        |         [XinXi](https://github.com/xzxxn777/Surge/blob/main/Script/XiJiu)         | ✅(2024/04/26) |     ✅️      |
+|       习酒        |         [XiJiu](https://github.com/xzxxn777/Surge/blob/main/Script/XiJiu)         | ✅(2024/04/26) |     ✅️      |
 |     IQOO社区      |          [IQOO](https://github.com/xzxxn777/Surge/blob/main/Script/IQOO)          | ✅(2024/05/04) |     ✅️      |
 |      哈根达斯       |          [HGDS](https://github.com/xzxxn777/Surge/blob/main/Script/HGDS)          | ✅(2024/05/06) |     ✅️      |
 |      攀升科技+      |          [PSKJ](https://github.com/xzxxn777/Surge/blob/main/Script/PSKJ)          | ✅(2024/05/06) |     ✅️      |
