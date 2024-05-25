@@ -8,7 +8,6 @@
 |       劲酒        |   [JingJiu](https://github.com/xzxxn777/Surge/blob/main/Script/BackUp/JingJiu)    | ✅(2024/04/24) |      ❌      |
 |     蒙牛超级会员      |       [MengNiu](https://github.com/xzxxn777/Surge/blob/main/Script/MengNiu)       | ✅(2024/04/24) |      ✅      |
 |       太平通       |   [TaiPingTong](https://github.com/xzxxn777/Surge/blob/main/Script/TaiPingTong)   | ✅(2024/04/24) |      ✅      |
-|      同程旅行       |     [TongCheng](https://github.com/xzxxn777/Surge/blob/main/Script/TongCheng)     | ✅(2024/04/24) |      ✅      |
 |       统一        |        [TongYi](https://github.com/xzxxn777/Surge/blob/main/Script/TongYi)        | ✅(2022/11/28) |      ✅      |
 |       茄皇        | [QieHuang](https://github.com/xzxxn777/Surge/blob/main/Script/TongYi/QieHuang.js) | ✅(2024/04/24) |     ✅️      |
 |      网易严选       |          [WYYX](https://github.com/xzxxn777/Surge/blob/main/Script/WYYX)          | ✅(2024/04/24) |     ✅️      |
@@ -19,6 +18,7 @@
 |      哈根达斯       |          [HGDS](https://github.com/xzxxn777/Surge/blob/main/Script/HGDS)          | ✅(2024/05/06) |     ✅️      |
 |      攀升科技+      |          [PSKJ](https://github.com/xzxxn777/Surge/blob/main/Script/PSKJ)          | ✅(2024/05/06) |     ✅️      |
 |        中兴手机商城         |           [ZTE](https://github.com/xzxxn777/Surge/blob/main/Script/ZTE)           | ✅(2024/05/07) |     ✅️      |
+|        红牛会员俱乐部         |           [RedBull](https://github.com/xzxxn777/Surge/blob/main/Script/RedBull)           | ✅(2024/05/25) |     ✅️      |
 
 ------
 ### [一键订阅boxjs](http://boxjs.com/#/sub/add/https://raw.githubusercontent.com/xzxxn777/Surge/main/xzxxn.json)
