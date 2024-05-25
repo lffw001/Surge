@@ -1,4 +1,4 @@
-const $ = new Env('红牛会员俱乐部');
+const $ = new Env('红牛会员俱乐部兑换');
 const RedBull = ($.isNode() ? JSON.parse(process.env.RedBull) : $.getjson("RedBull")) || [];
 const RedBull_Acc = ($.isNode() ? process.env.RedBull_Acc : $.getdata("RedBull_Acc")) || 0;
 const RedBull_GiftId = ($.isNode() ? process.env.RedBull_GiftId : $.getdata("RedBull_GiftId")) || 203;
