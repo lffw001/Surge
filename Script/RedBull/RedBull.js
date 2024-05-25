@@ -101,7 +101,7 @@ async function commonGet(url) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
-                    let location = resp.headers['location'];
+                    let location = resp.headers['location'] || resp.headers['Location'];
                     const urlStr = location.split('?')[1];
                     let result = {};
                     let paramsArr = urlStr.split('&')
