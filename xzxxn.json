@@ -95,6 +95,43 @@
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/YongXin/YongXin.jpg",
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/YongXin/YongXin.jpg"
       ]
+    },
+    {
+      "id": "RedBull",
+      "name": "红牛会员俱乐部兑换",
+      "keys": [
+        "RedBull_Acc",
+        "RedBull_GiftId"
+      ],
+      "scripts": [
+        {
+          "name": "红牛会员俱乐部兑换-手动执行",
+          "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/RedBull/RedBull_Exchange.js"
+        }
+      ],
+      "settings": [
+        {
+          "id": "RedBull_Acc",
+          "name": "兑换账号",
+          "val": "0",
+          "type": "text",
+          "desc": "默认第一个用户兑换，第二个填1，以此类推"
+        },
+        {
+          "id": "RedBull_GiftId",
+          "name": "商品id",
+          "val": "",
+          "type": "text",
+          "desc": "运行脚本查看"
+        }
+      ],
+      "author": "@xzxxn777",
+      "repo": "https://github.com/xzxxn777/Surge",
+      "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/RedBull/RedBull_Exchange.js",
+      "icons": [
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/RedBull/RedBull.jpg",
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/RedBull/RedBull.jpg"
+      ]
     }
   ]
 }
