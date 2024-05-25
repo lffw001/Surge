@@ -30,13 +30,21 @@ async function main() {
         let userId = byUserToken.data.userId;
         let success = true;
         while (success) {
+            let share = await commonPost("/coupon/game-client/activity/share-plus",{"accountId":memberId,"activityId":"2304","openId":openId});
+            console.log(share.msg)
             let join = await rongyiPost(`/v1/user/participation/join`, {"activityId":"2304","openId":openId,"userId":userId});
             console.log(join.msg);
-            success = join.success;
             if (join.success) {
                 let participateId = join.data.participateId;
                 let topScoreLotty = await rongyiPost(`/v2/lotty/topScoreLotty`, {"activityId":"2304","openId":openId,"playRecordId":participateId,"score":30});
-                console.log(`获得：${topScoreLotty.data[0].integrals} ${topScoreLotty.data[0].prizeName}`);
+                if (topScoreLotty.data[0]) {
+                    console.log(`获得：${topScoreLotty.data[0].integrals} ${topScoreLotty.data[0].prizeName}`);
+                } else {
+                    console.log('已达上限')
+                    success = false;
+                }
+            } else {
+                success = false;
             }
         }
         //查询积分
