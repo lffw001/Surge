@@ -37,6 +37,37 @@
       ]
     },
     {
+      "id": "QieHuang",
+      "name": "茄皇兑换",
+      "keys": [
+        "QieHuang_Acc",
+        "QieHuang_GiftId"
+      ],
+      "settings": [
+        {
+          "id": "QieHuang_Acc",
+          "name": "兑换账号",
+          "val": "1",
+          "type": "text",
+          "desc": "默认第一个用户兑换，第二个填2，以此类推"
+        },
+        {
+          "id": "QieHuang_GiftId",
+          "name": "商品id",
+          "val": "112",
+          "type": "text",
+          "desc": "运行脚本查看"
+        }
+      ],
+      "author": "@xzxxn777",
+      "repo": "https://github.com/xzxxn777/Surge",
+      "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/TongYi/QieHuang_Exchange.js",
+      "icons": [
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/TongYi/QieHuang.png",
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/TongYi/QieHuang.png"
+      ]
+    },
+    {
       "id": "WYYX",
       "name": "网易严选兑换",
       "keys": [
