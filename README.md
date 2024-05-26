@@ -1,6 +1,5 @@
 ## surge 脚本
 ### Script Overview
- 
 |   Application   |                                    Script name                                    |   Available   | Maintenance |
 |:---------------:|:---------------------------------------------------------------------------------:|:-------------:|:-----------:|
 |      古井贡酒       |        [GuJing](https://github.com/xzxxn777/Surge/blob/main/Script/GuJing)        | ✅(2024/04/24) |      ✅      |
