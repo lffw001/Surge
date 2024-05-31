@@ -30,43 +30,43 @@ async function main() {
         } else {
             console.log(sign.msg)
         }
-        console.log("————————————")
-        console.log("开始做任务")
-        let taskList = await commonGet(`/promotion/integra/double/task/list?promotionId=${promotionId}&page_no=1&page_size=10`);
-        for (const task of taskList.data.list) {
-            console.log(`任务：${task.promotionTaskName}`)
-            if (task.promotionTaskType == 'SIGN_IN') {
-                if (task.taskStatus == 2) {
-                    console.log('任务已完成')
-                } else {
-                    let sign = await commonGet(`/promotion/integra/double/sign/in?taskPromId=${task.promotionId}`);
-                    console.log(sign.success)
-                }
-            }
-        }
-        console.log("————————————")
-        console.log('开始游戏')
-        let rank = await commonGet(`/elimination/ranking?promotionId=${promotionId}`);
-        console.log(`当前总得分：${rank.data.mine.score}`)
-        let list = rank.data.list;
-        console.log(`第${list[list.length - 1].seq}名总得分：${list[list.length - 1].score}`)
-        let mainpage = await commonGet(`/elimination/mainpage?promotionId=${promotionId}`);
-        if (mainpage.data.remainTimes == 0) {
-            console.log('游戏次数已用完')
-        } else {
-            let score = Math.floor((list[list.length - 1].score - rank.data.mine.score)/mainpage.data.remainTimes);
-            for (let i = 0; i < mainpage.data.remainTimes; i++) {
-                let start = await commonGet(`/elimination/game/start?promotionId=${promotionId}`);
-                if (start.data.unionKey) {
-                    let over = await commonGet(`/elimination/game/over?promotionId=${promotionId}&unionKey=${start.data.unionKey}&score=${score}&nickName=${info.data.visitor.nick_name}&avatarUrl=${info.data.visitor.avatar_url}`);
-                    console.log(`总得分：${over.data.totalScore}`)
-                    await $.wait(2000)
-                } else {
-                    console.log(start.data.msg)
-                    break
-                }
-            }
-        }
+        // console.log("————————————")
+        // console.log("开始做任务")
+        // let taskList = await commonGet(`/promotion/integra/double/task/list?promotionId=${promotionId}&page_no=1&page_size=10`);
+        // for (const task of taskList.data.list) {
+        //     console.log(`任务：${task.promotionTaskName}`)
+        //     if (task.promotionTaskType == 'SIGN_IN') {
+        //         if (task.taskStatus == 2) {
+        //             console.log('任务已完成')
+        //         } else {
+        //             let sign = await commonGet(`/promotion/integra/double/sign/in?taskPromId=${task.promotionId}`);
+        //             console.log(sign.success)
+        //         }
+        //     }
+        // }
+        // console.log("————————————")
+        // console.log('开始游戏')
+        // let rank = await commonGet(`/elimination/ranking?promotionId=${promotionId}`);
+        // console.log(`当前总得分：${rank.data.mine.score}`)
+        // let list = rank.data.list;
+        // console.log(`第${list[list.length - 1].seq}名总得分：${list[list.length - 1].score}`)
+        // let mainpage = await commonGet(`/elimination/mainpage?promotionId=${promotionId}`);
+        // if (mainpage.data.remainTimes == 0) {
+        //     console.log('游戏次数已用完')
+        // } else {
+        //     let score = Math.floor((list[list.length - 1].score - rank.data.mine.score)/mainpage.data.remainTimes);
+        //     for (let i = 0; i < mainpage.data.remainTimes; i++) {
+        //         let start = await commonGet(`/elimination/game/start?promotionId=${promotionId}`);
+        //         if (start.data.unionKey) {
+        //             let over = await commonGet(`/elimination/game/over?promotionId=${promotionId}&unionKey=${start.data.unionKey}&score=${score}&nickName=${info.data.visitor.nick_name}&avatarUrl=${info.data.visitor.avatar_url}`);
+        //             console.log(`总得分：${over.data.totalScore}`)
+        //             await $.wait(2000)
+        //         } else {
+        //             console.log(start.data.msg)
+        //             break
+        //         }
+        //     }
+        // }
         console.log("————————————")
         console.log("查询积分")
         info = await commonGet(`/mini/wly/user/info`);
