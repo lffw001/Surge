@@ -27,6 +27,7 @@ async function main() {
             }
         }
     }
+    let success = false;
     for (let i = 0; i < 100; i++) {
         let slide = true;
         while (slide) {
@@ -52,12 +53,16 @@ async function main() {
                 console.log(`获得：调料包 * ${checkUserCapCode.data}`)
             } else if (reward.code == 0) {
                 slide = false;
-                console.log(reward)
+                success = true;
+                console.log(`获得：${reward.data.name}`)
             } else {
                 slide = false;
                 console.log(reward.message)
                 break
             }
+        }
+        if (success) {
+            break
         }
     }
 }
