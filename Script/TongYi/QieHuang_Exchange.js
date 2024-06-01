@@ -27,7 +27,7 @@ async function main() {
             }
         }
     }
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
         let slide = true;
         while (slide) {
             let reward = await commonGet(`/exchange/reward?id=${QieHuang_GiftId}`, {id: QieHuang_GiftId})
