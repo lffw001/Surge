@@ -58,7 +58,6 @@ async function main() {
         let remainStepCount = getAwardNum.data.game.remainStepCount;
         for (let i = 0;i<remainStepCount;i++) {
             let getAward = await commonGet(`/act-attendance/att/v4/walk`);
-            console.log(getAward)
             let awardName = getAward.data.awardDetailsInfoDTOS[0].awardName;
             console.log("拆礼盒获得："+awardName)
         }
