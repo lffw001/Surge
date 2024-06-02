@@ -108,13 +108,13 @@
       "id": "YongXin",
       "name": "富连e充兑换",
       "keys": [
-        "YongXin_Exchange"
+        "YongXin_ExchangeNum"
       ],
       "settings": [
         {
-          "id": "YongXin_Exchange",
-          "name": "是否兑换",
-          "val": "",
+          "id": "YongXin_ExchangeNum",
+          "name": "兑换次数",
+          "val": "0",
           "type": "text",
           "desc": "默认不兑换"
         }
