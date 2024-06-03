@@ -44,8 +44,12 @@ async function main() {
             let taskItemId = Object.keys(item)[0]
             let taskItemAchieveDetail = await commonGet(`/task/taskItemAchieveDetail?taskItemId=${taskItemId}`)
             console.log(`任务：${taskItemAchieveDetail.result.taskDesc}`)
-            let act = await commonGet(`/taskItem/achieve?taskItemId=${taskItemId}`)
-            console.log(act.message)
+            if (taskItemAchieveDetail.result.finished) {
+                console.log("任务已完成")
+            } else {
+                let act = await commonGet(`/taskItem/achieve?taskItemId=${taskItemId}`)
+                console.log(act.message)
+            }
         }
         console.log("————————————")
         console.log("查询积分")
@@ -59,7 +63,7 @@ async function main() {
 }
 
 async function getCookie() {
-    const accountId = $request.headers["accountId"] || $request.headers["AccountId"];
+    const accountId = $request.headers["accountid"] || $request.headers["accountId"];
     if (!accountId) {
         return
     }
