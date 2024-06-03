@@ -85,34 +85,6 @@ async function getCookie() {
     $.setjson(Cheryfs, "Cheryfs");
 }
 
-async function commonPost(url,body) {
-    return new Promise(resolve => {
-        const options = {
-            url: `https://channel.cheryfs.cn/archer/activity-api${url}`,
-            headers : {
-                'tenantId': '619669306447261696',
-                'accountId': 'dd1795268b1245acbb11636529bf27603ac8a52dedc753005906b6e907677dc4',
-            },
-            body: JSON.stringify(body)
-        }
-        $.post(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    await $.wait(2000)
-                    resolve(JSON.parse(data));
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
 async function commonGet(url) {
     return new Promise(resolve => {
         const options = {
@@ -121,7 +93,7 @@ async function commonGet(url) {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF',
                 'tenantId': '619669306447261696',
                 'activityId': '661720946758930433',
-                'accountId': '37e9385cbdd08f654a9bd2b25cf8a5a84465a668c9bb58696d20846af2afa283',
+                'accountId': accountId,
             }
         }
         $.get(options, async (err, resp, data) => {
@@ -150,7 +122,7 @@ async function signGet(url) {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF',
                 'tenantId': '619669306447261696',
                 'activityId': '620810406813786113',
-                'accountId': '37e9385cbdd08f654a9bd2b25cf8a5a84465a668c9bb58696d20846af2afa283',
+                'accountId': accountId,
             }
         }
         $.get(options, async (err, resp, data) => {
@@ -179,7 +151,7 @@ async function luckyDrawGet(url) {
                 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/116.0.0.0 Safari/537.36 MicroMessenger/7.0.20.1781(0x6700143B) NetType/WIFI MiniProgramEnv/Windows WindowsWechat/WMPF',
                 'tenantId': '619669306447261696',
                 'activityId': '620821692188483585',
-                'accountId': '37e9385cbdd08f654a9bd2b25cf8a5a84465a668c9bb58696d20846af2afa283',
+                'accountId': accountId,
             }
         }
         $.get(options, async (err, resp, data) => {
