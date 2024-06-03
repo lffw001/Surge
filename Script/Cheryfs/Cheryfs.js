@@ -37,7 +37,11 @@ async function main() {
         let luckydraw = await luckyDrawGet('/luckydraw/luckydraw/27AA8429B12847B2AAE25FF2A0620284')
         console.log(luckydraw.result.message)
         let luckydrawResult = await luckyDrawGet('/luckydraw/luckydrawResult/27AA8429B12847B2AAE25FF2A0620284')
-        console.log(luckydrawResult.result)
+        if (luckydrawResult.result.result == "true") {
+            console.log(`获得：${luckydrawResult.result.awardName}`)
+        } else {
+            console.log(luckydrawResult.result.result)
+        }
         console.log("————————————")
         console.log("每日任务")
         for (const item of taskItemIdArr) {
