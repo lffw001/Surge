@@ -20,6 +20,10 @@ async function main() {
         console.log(`用户：${nickname}开始任务`)
         console.log('开始签到')
         let sign = await commonGet('route=plugin.sign.Frontend.Modules.Sign.Controllers.sign.sign&')
+        if (sign.msg == '请登录') {
+            $.msg($.name, `用户：${nickname}`, `cookie已过期，请重新获取`);
+            continue
+        }
         if (sign.result == 1) {
             console.log(`${sign.msg}，获得：${sign.data.amount}元宝`)
         } else {
@@ -43,7 +47,7 @@ async function main() {
         console.log("元宝提现")
         let query = await commonGet('route=plugin.love.Frontend.Controllers.page.index&')
         console.log(`拥有元宝：${query.data.usable}`)
-        if (query.data.usable > 0) {
+        if (query.data.usable > 0.1) {
             let withdraw = await commonGet(`route=plugin.love.Frontend.Modules.Love.Controllers.withdraw.index&change_value=${query.data.usable}&withdraw_type=4`)
             console.log(withdraw.msg)
         }
