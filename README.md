@@ -18,6 +18,7 @@
 |      攀升科技+      |          [PSKJ](https://github.com/xzxxn777/Surge/blob/main/Script/PSKJ)          | ✅(2024/05/06) |     ✅️      |
 |        中兴手机商城         |           [ZTE](https://github.com/xzxxn777/Surge/blob/main/Script/ZTE)           | ✅(2024/05/07) |     ✅️      |
 |        红牛会员俱乐部         |           [RedBull](https://github.com/xzxxn777/Surge/blob/main/Script/RedBull)           | ✅(2024/05/25) |     ✅️      |
+|        好奇车生活         |           [Cheryfs](https://github.com/xzxxn777/Surge/blob/main/Script/Cheryfs)           | ✅(2024/06/03) |     ✅️      |
 
 ------
 ### [一键订阅boxjs](http://boxjs.com/#/sub/add/https://raw.githubusercontent.com/xzxxn777/Surge/main/xzxxn.json)
