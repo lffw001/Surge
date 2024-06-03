@@ -23,14 +23,19 @@ async function main() {
         console.log(`用户：${accountId}开始任务`)
         console.log('开始签到')
         let sign = await signGet('/signinact/signin')
-        if (sign.result.success) {
-            console.log(`签到成功`)
-            let reward = await signGet(`/signinact/sendRewardResult/${sign.result.sendLogId}`)
-            for (const item of reward.result.list) {
-                console.log(`获得：${item.pointAmt} ${item.winningPrizeName}`)
+        if (sign.success) {
+            if (sign.result.success) {
+                console.log(`签到成功`)
+                let reward = await signGet(`/signinact/sendRewardResult/${sign.result.sendLogId}`)
+                for (const item of reward.result.list) {
+                    console.log(`获得：${item.pointAmt} ${item.winningPrizeName}`)
+                }
+            } else {
+                console.log(sign.result.message)
             }
         } else {
-            console.log(sign.result.message)
+            console.log('7点-23点才能签到')
+            break;
         }
         console.log("————————————")
         console.log("每日抽奖")
