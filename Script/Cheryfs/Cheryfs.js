@@ -35,17 +35,23 @@ async function main() {
             }
         } else {
             console.log('7点-23点才能签到')
-            break;
         }
         console.log("————————————")
         console.log("每日抽奖")
         let luckydraw = await luckyDrawGet('/luckydraw/luckydraw/27AA8429B12847B2AAE25FF2A0620284')
-        console.log(luckydraw.result.message)
-        let luckydrawResult = await luckyDrawGet('/luckydraw/luckydrawResult/27AA8429B12847B2AAE25FF2A0620284')
-        if (luckydrawResult.result.result == "true") {
-            console.log(`获得：${luckydrawResult.result.awardName}`)
+        if (luckydraw.success) {
+            if (luckydraw.result.success) {
+                let luckydrawResult = await luckyDrawGet('/luckydraw/luckydrawResult/27AA8429B12847B2AAE25FF2A0620284')
+                if (luckydrawResult.result.result == "true") {
+                    console.log(`获得：${luckydrawResult.result.awardName}`)
+                } else {
+                    console.log(luckydrawResult.result.result)
+                }
+            } else {
+                console.log(luckydraw.result.message)
+            }
         } else {
-            console.log(luckydrawResult.result.result)
+            console.log('7点-23点才能抽奖')
         }
         console.log("————————————")
         console.log("每日任务")
