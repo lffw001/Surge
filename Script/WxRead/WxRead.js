@@ -29,7 +29,6 @@ async function main() {
         let gold = await commonGet(`/yunonline/v1/gold?unionid=${id}&time=${Date.now()}`)
         console.log(`当前金币：${gold.data.last_gold}`)
         console.log(`阅读进度：${gold.data.day_read}/${parseInt(gold.data.remain_read) + parseInt(gold.data.day_read)}`)
-        let time = gold.data.day_read
         console.log("————————————")
         console.log("开始阅读")
         while (true) {
@@ -43,20 +42,25 @@ async function main() {
                 let arr = paramsArr[i].split('=')
                 result[arr[0]] = arr[1];
             }
+            let art_start_time = Date.parse(new Date());
             let sfterUrl = wtmpdomain2.data.domain.replace("/xyrf.html", "/sfterte5s")
-            let sfter = await readGet(`${sfterUrl.split('?')[0]}?uk=${result.uk}&time=${Date.now()}&psgn=168&vs=110`)
+            let sfter = await readGet(`${sfterUrl.split('?')[0]}?uk=${result.uk}&time=${art_start_time}&psgn=168&vs=110`)
             console.log(sfter.msg)
             if (sfter.msg != 'success') {
                 break
             }
             await $.wait(5000)
-            let read = await readGet(`${url.split('?')[0]}?uk=${result.uk}&time=${time}&timestamp=${Date.now()}`)
+            let art_end_time = Date.parse(new Date());
+            let time = art_end_time/1000 - art_start_time/1000;
+            console.log(time)
+            let read = await readGet(`${url.split('?')[0]}?uk=${result.uk}&time=${time}&timestamp=${art_end_time}`)
             if (read.msg == 'success') {
                 console.log(`阅读成功，获得${read.data.gold}金币`)
-                console.log(`进度：${read.data.day_read}/${read.data.remain_read + read.data.day_read}`)
+                console.log(`阅读进度：${read.data.day_read}/${read.data.remain_read + read.data.day_read}`)
                 time = read.data.day_read;
             } else {
                 console.log(read.msg)
+                break
             }
         }
         console.log("————————————")
