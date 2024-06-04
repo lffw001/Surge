@@ -40,15 +40,14 @@ async function main() {
         console.log("每日抽奖")
         let luckydraw = await luckyDrawGet('/luckydraw/luckydraw/27AA8429B12847B2AAE25FF2A0620284')
         if (luckydraw.success) {
-            if (luckydraw.result.success) {
+            console.log(luckydraw.result.message)
+            if (luckydraw.result.result) {
                 let luckydrawResult = await luckyDrawGet('/luckydraw/luckydrawResult/27AA8429B12847B2AAE25FF2A0620284')
                 if (luckydrawResult.result.result == "true") {
                     console.log(`获得：${luckydrawResult.result.awardName}`)
                 } else {
                     console.log(luckydrawResult.result.result)
                 }
-            } else {
-                console.log(luckydraw.result.message)
             }
         } else {
             console.log('7点-23点才能抽奖')

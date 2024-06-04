@@ -54,6 +54,13 @@ async function main() {
         console.log("————————————")
         console.log("查询余额")
         let balance = await commonGet('route=finance.balance.balance&i=12&type=1')
+        console.log(`拥有余额：${balance.data.credit2}`)
+        if (balance.data.credit2 >= 5) {
+            console.log(`余额大于5元，开始微信提现`)
+            let wxWithdraw = await commonGet(`route=finance.balance-withdraw.withdraw&withdraw_type=1&withdraw_money=${balance.data.credit2}`)
+            console.log(wxWithdraw.msg)
+        }
+        balance = await commonGet('route=finance.balance.balance&i=12&type=1')
         console.log(`拥有余额：${balance.data.credit2}\n`)
         notice += `用户：${nickname} 拥有余额：${balance.data.credit2}\n`
     }
