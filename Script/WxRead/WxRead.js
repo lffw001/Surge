@@ -63,7 +63,7 @@ async function main() {
         console.log("金币查询")
         gold = await commonGet(`/yunonline/v1/gold?unionid=${id}&time=${Date.now()}`)
         console.log(`拥有金币：${gold.data.last_gold}\n`)
-        notice += `用户：${nickname} 拥有金币：${gold.data.last_gold}\n`
+        notice += `用户：${id} 拥有金币：${gold.data.last_gold}\n`
     }
     if (notice) {
         $.msg($.name, '', notice);
