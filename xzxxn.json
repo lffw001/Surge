@@ -200,6 +200,43 @@
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/Cheryfs/Cheryfs.jpg",
         "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/Cheryfs/Cheryfs.jpg"
       ]
+    },
+    {
+      "id": "IQOO",
+      "name": "IQOO社区兑换",
+      "keys": [
+        "IQOO_Acc",
+        "IQOO_GiftId"
+      ],
+      "scripts": [
+        {
+          "name": "IQOO社区兑换-手动执行",
+          "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/IQOO/IQOO_Exchange.js"
+        }
+      ],
+      "settings": [
+        {
+          "id": "IQOO_Acc",
+          "name": "兑换账号",
+          "val": "0",
+          "type": "text",
+          "desc": "默认第一个用户兑换，第二个填1，以此类推"
+        },
+        {
+          "id": "IQOO_GiftId",
+          "name": "商品id",
+          "val": "",
+          "type": "text",
+          "desc": "运行脚本查看"
+        }
+      ],
+      "author": "@xzxxn777",
+      "repo": "https://github.com/xzxxn777/Surge",
+      "script": "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/IQOO/IQOO_Exchange.js",
+      "icons": [
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/IQOO/IQOO.jpg",
+        "https://raw.githubusercontent.com/xzxxn777/Surge/main/Script/IQOO/IQOO.jpg"
+      ]
     }
   ]
 }

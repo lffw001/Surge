@@ -1,211 +1,44 @@
-const $ = new Env('IQOO社区')
+const $ = new Env('IQOO社区兑换')
 const crypto = createCryptoJS()
 const IQOO = ($.isNode() ? JSON.parse(process.env.IQOO) : $.getjson("IQOO")) || [];
-const IQOO_Create = ($.isNode() ? process.env.IQOO_Create : $.getdata("IQOO_Create")) || false;
+const IQOO_Acc = ($.isNode() ? process.env.IQOO_Acc : $.getdata("IQOO_Acc")) || 0;
+const IQOO_GiftId = ($.isNode() ? process.env.IQOO_GiftId : $.getdata("IQOO_GiftId")) || 600148;
 let time = ''
 let token = ''
 let xVisitor = ''
 let notice = ''
 !(async () => {
-    if (typeof $request != "undefined") {
-        await getCookie();
-    } else {
-        await main();
-    }
+    await main();
 })().catch((e) => {$.log(e)}).finally(() => {$.done({});});
 
 async function main() {
     console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
-    for (const item of IQOO) {
-        id = item.id;
-        token = item.token;
-        xVisitor = item.xVisitor;
-        console.log(`用户：${id}开始任务`)
-        time = Math.floor(Date.now() / 1e3)
-        //签到
-        console.log("开始签到")
-        let sign = await commonPost('/v3/sign',{"from":""},getSign('POST','/api/v3/sign',{"from":""}));
-        if (sign.Code == -4011) {
-            $.msg($.name, `用户：${id}`, `token已过期，请重新获取`);
-            continue
-        }
-        if (sign.Code == 0) {
-            for (const item of sign.Meta.tips) {
-                console.log(item.message)
-            }
-        } else {
-            console.log(sign.Message)
-        }
-        //幸运抽奖
-        console.log("————————————")
-        console.log("幸运抽奖")
-        let getCount = await commonGet('/v3/today.draw.count',getSign('GET','/api/v3/today.draw.count',{}));
-        if (getCount.Data.count == 0) {
-            let draw = await commonPost('/v3/luck.draw',{},getSign('POST','/api/v3/luck.draw',{}));
-            console.log(`抽奖获得：${draw.Data.prize_name}`)
-        } else {
-            console.log("今日免费抽奖次数已用完")
-        }
-        console.log("————————————")
-        console.log("开始做任务")
-        //获取帖子参数
-        let threadList = await commonGet('/v3/thread.list?scope=5&page=1&perPage=10&filter[sort]=4&filter[essence]=1&sequence=0',getSign('GET','/api/v3/thread.list',{"filter[essence]":1,"filter[sort]":4,"page":1,"perPage":10,"scope":5,"sequence":0}));
-        let threadId = threadList.Data.pageData[0].threadId
-        let postId = threadList.Data.pageData[0].postId
-        let tasksList = await commonGet('/v3/user.score.rule',getSign('GET','/api/v3/user.score.rule',{}));
-        //新手任务
-        for (const task of tasksList.Data.newbieData) {
-            console.log(`任务：${task.access}`)
-            if (task.access == '首次发表评论') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    time = Math.floor(Date.now() / 1e3)
-                    let create = await commonPost('/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""},getSign('POST','/api/v3/posts.create',{"id":threadId,"type":0,"content":"666","source":""}));
-                    if (create.Meta) {
-                        for (const item of create.Meta.tips) {
-                            console.log(item.message)
-                        }
-                    }
-                }
-            }
-            if (task.access == '认证机型') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    time = Math.floor(Date.now() / 1e3)
-                    let setPhone = await commonPost('/v3/set/phone.model',{"model":"V2218A","brand":"vivo","product":"iQOO 10 Pro","guideType":1},getSign('POST','/api/v3/set/phone.model',{"model":"V2218A","brand":"vivo","product":"iQOO 10 Pro","guideType":1}));
-                    if (setPhone.Meta) {
-                        for (const item of setPhone.Meta.tips) {
-                            console.log(item.message)
-                        }
-                    }
-                }
-            }
-        }
-        //今日任务
-        for (const task of tasksList.Data.perDayData) {
-            console.log(`任务：${task.access}`)
-            if(task.access == '发表帖子') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
-                    if (IQOO_Create) {
-                        for (let i = 0; i < count; i++) {
-                            let text = await textGet();
-                            if (!text) {
-                                text = '如果觉得没有朋友，就去找喜欢的人表白，对方会提出和你做朋友的。'
-                            }
-                            text = `<p>${text}</p>`
-                            let body = {"title":"毒鸡汤","categoryId":27,"content":{"text":text},"position":{},"price":0,"freeWords":0,"attachmentPrice":0,"draft":0,"anonymous":0,"topicId":"","source":"","videoId":""}
-                            let create = await commonPost('/v3/thread.create',body,getSign('POST','/api/v3/thread.create',{"title":"毒鸡汤","categoryId":27,"content":{"text":text},"position":{},"price":0,"freeWords":0,"attachmentPrice":0,"draft":0,"anonymous":0,"topicId":"","source":"","videoId":""}));
-                            if (create.Meta) {
-                                for (const item of create.Meta.tips) {
-                                    console.log(item.message)
-                                }
-                            }
-                        }
-                    } else {
-                        console.log('默认不发帖，发帖请设置变量IQOO_Create为true')
-                    }
-                }
-            }
-            if(task.access == '浏览帖子') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
-                    for (let i = 0; i < count; i++) {
-                        let view = await commonGet(`/v3/view.count?threadId=${threadId}&type=0`, getSign('GET', '/api/v3/view.count', {"threadId": threadId, "type": 0}));
-                        if (view.Meta) {
-                            for (const item of view.Meta.tips) {
-                                console.log(item.message)
-                            }
-                        }
-                    }
-                }
-            }
-            if(task.access == '点赞帖子') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
-                    for (let i = 0; i < count; i++) {
-                        //点赞
-                        let like = await commonPost('/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":true}}},getSign('POST','/api/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":true}}}));
-                        if (like.Meta) {
-                            for (const item of like.Meta.tips) {
-                                console.log(item.message)
-                            }
-                        }
-                        //取消点赞
-                        let unLike = await commonPost('/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":false}}},getSign('POST','/api/v3/posts.update',{"id":threadId,"postId":postId,"data":{"attributes":{"isLiked":false}}}));
-                        console.log(unLike)
-                    }
-                }
-            }
-            if(task.access == '分享帖子') {
-                let count = parseInt(task.upper_limit) - task.isFinal;
-                if (count == 0) {
-                    console.log('任务已完成')
-                } else {
-                    console.log(`完成进度：${task.isFinal}/${parseInt(task.upper_limit)}`)
-                    for (let i = 0; i < count; i++) {
-                        let share =  await commonPost('/v3/thread.share',{"threadId":threadId},getSign('POST','/api/v3/thread.share',{"threadId":threadId}));
-                        if (share.Meta) {
-                            for (const item of share.Meta.tips) {
-                                console.log(item.message)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        //查询酷币
-        console.log("————————————")
-        console.log("查询酷币")
-        let user = await commonGet(`/v3/user?userId=${id}`,getSign('GET','/api/v3/user',{"userId":id}));
-        console.log(`拥有酷币: ${user.Data.score}\n`)
-        notice += `用户：${id} 拥有酷币: ${user.Data.score}\n`
+    let id = IQOO[IQOO_Acc].id;
+    token = IQOO[IQOO_Acc].token;
+    xVisitor = IQOO[IQOO_Acc].xVisitor;
+    console.log(`用户：${id}开始任务`)
+    time = Math.floor(Date.now() / 1e3)
+    let goodsList = await commonGet('/v3/goods.list?scope=0&page=1&perPage=1000&filter[goodsType]=0&filter[saleStatus]=2', getSign('GET', '/api/v3/goods.list', {"filter[goodsType]": 0, "filter[saleStatus]": 2, "page": 1, "perPage": 1000, "scope": 0}));
+    for (const goods of goodsList.Data.list) {
+        console.log(`商品：${goods.goods_name} id：${goods.id} 库存：${goods.goods_stock} 需要酷币：${goods.goods_score}`)
     }
-    if (notice) {
-        $.msg($.name, '', notice);
+    let address = await commonGet(`/v3/user.address.list?filter[userId]=${id}&perPage=10&page=1`, getSign('GET', '/api/v3/user.address.list', {"filter[userId]": id, "page": 1, "perPage": 10}));
+    let defaultId = ''
+    for (const item of address.Data) {
+        if (item.is_default == "1") {
+            console.log(`默认地址id：${item.id}`)
+            defaultId = item.id;
+        }
     }
-}
-
-async function getCookie() {
-    const token = $request.headers["authorization"] || $request.headers["Authorization"];
-    if (!token) {
+    if (defaultId == '') {
+        console.log('请先添加默认地址')
+        $.msg($.name, `用户：${id}`, `请先添加默认地址`);
         return
     }
-    const xVisitor = $request.headers["x-visitor"] || $request.headers["X-Visitor"];
-    const body = $.toObj($response.body);
-    if (!body.Data || !body.Data.id) {
-        return
+    for (let i = 0; i < 10; i++) {
+        let exchange = await commonPost('/v3/exchange', {"userId": id, "id": IQOO_GiftId, "addressId": defaultId, "imei": ""}, getSign('POST', '/api/v3/exchange', {"userId": id, "id": IQOO_GiftId, "addressId": defaultId, "imei": ""}));
+        console.log(exchange)
     }
-    const id = body.Data.id;
-    const newData = {"id": id, "token": token, "xVisitor": xVisitor};
-    const index = IQOO.findIndex(e => e.id == newData.id);
-    if (index !== -1) {
-        if (IQOO[index].token == newData.token) {
-            return
-        } else {
-            IQOO[index] = newData;
-            console.log(newData.token)
-            $.msg($.name, `🎉用户${newData.id}更新token成功!`, ``);
-        }
-    } else {
-        IQOO.push(newData)
-        console.log(newData.token)
-        $.msg($.name, `🎉新增用户${newData.id}成功!`, ``);
-    }
-    $.setjson(IQOO, "IQOO");
 }
 
 async function commonGet(url, signature) {
@@ -287,31 +120,6 @@ async function commonPost(url,body,signature) {
     })
 }
 
-async function textGet() {
-    return new Promise(resolve => {
-        const options = {
-            url: `https://api.btstu.cn/yan/api.php`,
-            headers : {
-            }
-        }
-        $.get(options, async (err, resp, data) => {
-            try {
-                if (err) {
-                    console.log(`${JSON.stringify(err)}`)
-                    console.log(`${$.name} API请求失败，请检查网路重试`)
-                } else {
-                    await $.wait(2000)
-                    resolve(data);
-                }
-            } catch (e) {
-                $.logErr(e, resp)
-            } finally {
-                resolve();
-            }
-        })
-    })
-}
-
 function getSign(e,t,n) {
     var o, s, r, a = `${time}`,
         c = "GET" == e ? function (e) {
@@ -335,7 +143,7 @@ function getSign(e,t,n) {
                 return '';
             }
         }(n) : "";
-        l = "GET" == e ? "" : JSON.stringify(n);
+    l = "GET" == e ? "" : JSON.stringify(n);
     o = "2618194b0ebb620055e19cf9811d3c13"
     s = e + "&" + t + "&" + c + "&" + l + "&appid=1002&timestamp=" + a
     r = crypto.HmacSHA256(s, o)
