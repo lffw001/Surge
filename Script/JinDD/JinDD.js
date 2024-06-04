@@ -1,5 +1,5 @@
 const $ = new Env('金多多商城')
-const JinDD = ($.isNode() ? (process.env.JinDD) : $.getjson("JinDD")) || [];
+const JinDD = ($.isNode() ? JSON.parse(process.env.JinDD) : $.getjson("JinDD")) || [];
 let cookie = ''
 let id = ''
 let notice = ''
