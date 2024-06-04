@@ -8,6 +8,7 @@ let taskItemIdArr = [{"676992242694664192":"申贷赢好礼"},{"6769926185588408
 {"671509580525694976":"幸运好礼 一触‘积’发"},{"662819978147287040":"车生活小程序注册"},{"662813735114530816":"车主身份认证"},
 {"662805299354165248":"逛好物兑换"},{"662805251388100608":"逛违章罚款"},{"662805189626974208":"逛维修保养"},{"662805119309467648":"逛附近加油站"},
 {"662794321581330432":"逛选二手车"},{"662794237938524160":"逛选新车"},{"662794135429734400":"逛汽车回收"},{"662793252641984512":"逛本地车服"}]
+let time_out = 60000
 !(async () => {
     if (typeof $request != "undefined") {
         await getCookie();
@@ -108,7 +109,8 @@ async function commonGet(url) {
                 'tenantId': '619669306447261696',
                 'activityId': '661720946758930433',
                 'accountId': accountId,
-            }
+            },
+            timeout:time_out
         }
         $.get(options, async (err, resp, data) => {
             try {
@@ -137,7 +139,8 @@ async function signGet(url) {
                 'tenantId': '619669306447261696',
                 'activityId': '620810406813786113',
                 'accountId': accountId,
-            }
+            },
+            timeout:time_out
         }
         $.get(options, async (err, resp, data) => {
             try {
@@ -166,7 +169,8 @@ async function luckyDrawGet(url) {
                 'tenantId': '619669306447261696',
                 'activityId': '620821692188483585',
                 'accountId': accountId,
-            }
+            },
+            timeout:time_out
         }
         $.get(options, async (err, resp, data) => {
             try {
