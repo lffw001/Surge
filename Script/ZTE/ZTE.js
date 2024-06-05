@@ -2,6 +2,7 @@ const $ = new Env('中兴手机商城');
 const ZTE = ($.isNode() ? JSON.parse(process.env.ZTE) : $.getjson("ZTE")) || [];
 let token = ''
 let  id = ''
+let teamIdArr = ['0e8effcc5dae56e66eaf91e11758eeb9','33c123619ef9bb5c62da971f1074b3e5','3f74bb7a54fbafc4d472de0eadd2754a','9349300c3c0a4a49eef69cbbd5485ad9','975bd7181aa0e2fd71a43f6d84e84840']
 let notice = '';
 !(async () => {
 
@@ -14,6 +15,17 @@ let notice = '';
 
 async function main() {
     console.log('作者：@xzxxn777\n频道：https://t.me/xzxxn777\n群组：https://t.me/xzxxn7777\n自用机场推荐：https://xn--diqv0fut7b.com\n')
+    for (const item of ZTE) {
+        id = item.id;
+        token = item.token;
+        let create = await commonGet('st_id=12&openid=1&tmplIds=%5B%22dNjQkGU9Q5bGelME3VKu3WvLq8SjAK6zvO8TqmVBNQY%22%2C%22z8iz5MrEFo7ebe5JfG8hnYhBdBizmlyRYYB3Dn92VE4%22%2C%22iUPjQBzMS5qa2gbluX5LSBT4pY_ZJfHaRjHmU4eqjz8%22%5D&method=shareTeaming.create.team&format=json&v=v1');
+        if (create.errorcode == 0) {
+            console.log(`创建队伍成功：${create.data.team_id}`)
+            teamIdArr.push(create.data.team_id)
+        } else {
+            console.log(create.msg)
+        }
+    }
     for (const item of ZTE) {
         id = item.id;
         token = item.token;
@@ -69,6 +81,32 @@ async function main() {
                 default:
             }
         }
+        console.log("————————————")
+        console.log("抽福袋")
+        let lotteryInfo = await commonPost(`lottery_id=66&method=promotion.lottery.get.info&format=json&v=v1`);
+        let lottery = await commonPost(`lottery_id=${lotteryInfo.data.lottery_id}&last_modified_time=${lotteryInfo.data.modified_time}&method=promotion.lottery.get.prize&format=json&v=v1`);
+        if (lottery.errorcode == 0) {
+            console.log(`抽奖获得：${lottery.data.prizeInfo.bonus_desc}`)
+        } else {
+            console.log(lottery.msg)
+        }
+        console.log("————————————")
+        console.log("组队")
+        for (const teamId of teamIdArr) {
+            let teamInfo = await commonGet(`team_id=${teamId}&method=get.shareTeaming.teamInfo&format=json&v=v1`);
+            if (teamInfo.data.members_num < 4) {
+                let join = await commonGet(`st_id=12&openid=1&team_id=${teamId}&tmplIds=%5B%22dNjQkGU9Q5bGelME3VKu3WvLq8SjAK6zvO8TqmVBNQY%22%2C%22z8iz5MrEFo7ebe5JfG8hnYhBdBizmlyRYYB3Dn92VE4%22%2C%22iUPjQBzMS5qa2gbluX5LSBT4pY_ZJfHaRjHmU4eqjz8%22%5D&method=shareTeaming.join.team&format=json&v=v1`);
+                if (join.errorcode == 0) {
+                    console.log(`加入成功`)
+                } else {
+                    console.log(join.msg)
+                }
+            } else {
+                console.log(`队伍已满`)
+            }
+        }
+        console.log("————————————")
+        console.log("积分查询")
         info = await commonGet(`method=member.index&format=json&v=v1`);
         console.log(`拥有积分:${info.data.point}\n`)
         notice += `用户名：${info.data.username}  拥有积分:${info.data.point}\n`
@@ -130,6 +168,7 @@ async function commonGet(query) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    await $.wait(2000)
                     resolve(JSON.parse(data));
                 }
             } catch (e) {
@@ -166,6 +205,7 @@ async function commonPost(body) {
                     console.log(`${JSON.stringify(err)}`)
                     console.log(`${$.name} API请求失败，请检查网路重试`)
                 } else {
+                    await $.wait(2000)
                     resolve(JSON.parse(data));
                 }
             } catch (e) {
