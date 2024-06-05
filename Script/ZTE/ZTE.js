@@ -91,6 +91,14 @@ async function main() {
             console.log(lottery.msg)
         }
         console.log("————————————")
+        console.log("刮刮乐")
+        let prize = await commonGet('scratchcard_id=186&last_modified_time=1717137598&method=promotion.scratchcard.prize.gen2&format=json&v=v1')
+        if (prize.data.success) {
+            console.log(`刮刮乐获得：${prize.data.prizeInfo.bonus_desc}`)
+        } else {
+            console.log(prize.data.msg)
+        }
+        console.log("————————————")
         console.log("组队")
         for (const teamId of teamIdArr) {
             let teamInfo = await commonGet(`team_id=${teamId}&method=get.shareTeaming.teamInfo&format=json&v=v1`);
